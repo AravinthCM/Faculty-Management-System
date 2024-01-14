@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:padding="20dp">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/txtent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="FACULTY LEAVE MANAGEMENT SYSTEM"
+            android:textSize="25dp"
+            android:textColor="@color/black"
+            android:layout_marginTop="40dp"
+            android:transitionName="texttra"
+            android:gravity="center"
+            android:fontFamily="sans-serif-condensed-medium" />
+
+        <ImageView
+            android:id="@+id/logoent"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_marginTop="50dp"
+            android:transitionName="logo_image"
+            android:src="@drawable/logo"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="0dp">
+
+            <Button
+                android:id="@+id/letsgo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:text="GO"/>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/notetxt"
+                android:transitionName="notetxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red"
+                android:textSize="10dp"
+                android:gravity="center"
+                android:text="NOTE: The is for management of the Sri Ramakrishna Engineering College Faculties only"/>
+
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

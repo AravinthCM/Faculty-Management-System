@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Facultymanagement</string>
+    <string name="submit_request">Submit Request</string>
+
+    <string-array name="leave">
+        <item>Sick leave</item>
+        <item>Vacation</item>
+        <item>Personal leave</item>
+    </string-array>
+</resources>
