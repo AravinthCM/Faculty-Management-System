@@ -1,18 +1,19 @@
 package com.example.facultymanagement;
 
-public class LeaveRequestForm {
+public class UserList {
 
-    String facname,leavetype,leavereason,startdate,enddate,status;
+    private String facname,leavereason,startdate,enddate,status;
 
-    public LeaveRequestForm() {
+    public UserList() {
+
     }
 
-    public LeaveRequestForm(String facname, String leavereason, String startdate, String enddate, String status) {
+    public UserList(String facname, String leavereason, String startdate, String enddate, String status) {
         this.facname = facname;
         this.leavereason = leavereason;
         this.startdate = startdate;
         this.enddate = enddate;
-        this.status=status;
+        this.status = status;
     }
 
     public String getFacname() {
@@ -22,7 +23,6 @@ public class LeaveRequestForm {
     public void setFacname(String facname) {
         this.facname = facname;
     }
-
 
     public String getLeavereason() {
         return leavereason;

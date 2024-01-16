@@ -5,9 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -23,10 +21,19 @@ public class MainActivity5 extends AppCompatActivity {
         setContentView(R.layout.activity_main5);
 
         TextView btn = findViewById(R.id.abc);
+        TextView abcde = findViewById(R.id.abcde);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent =new Intent(MainActivity5.this, MainActivity4.class);
+                startActivity(intent);
+            }
+        });
+
+        abcde.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(MainActivity5.this, RetrievingLeaveForm8.class);
                 startActivity(intent);
             }
         });
@@ -44,7 +51,7 @@ public class MainActivity5 extends AppCompatActivity {
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(MainActivity5.this, Mainactivity6.class);
+                Intent intent =new Intent(MainActivity5.this, MainActivity6.class);
                 startActivity(intent);
             }
         });

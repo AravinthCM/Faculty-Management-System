@@ -20,13 +20,15 @@ public class MainActivity4 extends AppCompatActivity {
     private String adapterView;
     TextInputLayout FacName,LeaveType,LeaveReason,StartDate,EndDate;
     Button SubmitRequest;
-    FirebaseDatabase rootnode2;
-    DatabaseReference reference2;
+    FirebaseDatabase database;
+    DatabaseReference leaveReqReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main4);
+
+        database = FirebaseDatabase.getInstance();
 
         Button btn = findViewById(R.id.reqsub);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -39,7 +41,7 @@ public class MainActivity4 extends AppCompatActivity {
 
 
         FacName=findViewById(R.id.fullname);
-        LeaveType=findViewById(R.id.leaveType);
+       // LeaveType=findViewById(R.id.leaveType);
         LeaveReason=findViewById(R.id.phone);
         StartDate=findViewById(R.id.start);
         EndDate=findViewById(R.id.end);
@@ -48,27 +50,34 @@ public class MainActivity4 extends AppCompatActivity {
         SubmitRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                leaverequest();
+                leaveRequest();
             }
         });
 
     }
 
-    public void leaverequest(){
-        rootnode2=FirebaseDatabase.getInstance();
-        reference2= rootnode2.getReference("Request Forms");
+    public void leaveRequest(){
 
         String name = FacName.getEditText().getText().toString();
         String reason = LeaveReason.getEditText().getText().toString();
-        String type = LeaveType.getEditText().getText().toString();
+        //String type = LeaveType.getEditText().getText().toString();
         String dateStart = StartDate.getEditText().getText().toString();
         String dateEnd = EndDate.getEditText().getText().toString();
 
-        if(!ValidateFacultyName() | !ValidateLeaveType() | !ValidateLeaveReason() | !ValidateStart() |!ValidateEnd()){
+        if(!ValidateFacultyName() | !ValidateLeaveReason() | !ValidateStart() |!ValidateEnd()){
             return;
         }else {
-            LeaveRequestForm help = new LeaveRequestForm(name, reason, type, dateStart, dateEnd);
-            reference2.child(name).setValue(help);
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            leaveReqReference = database.getReference("leaveRequests");
+
+            String leaveReqId = leaveReqReference.push().getKey();
+
+            LeaveRequestForm help = new LeaveRequestForm(name, reason, dateStart, dateEnd, "pending");
+            leaveReqReference.child(leaveReqId).setValue(help);
+
+            Toast.makeText(MainActivity4.this,"Leave Form successfully Submitted",Toast.LENGTH_SHORT).show();
+            Intent intent=new Intent(MainActivity4.this,MainActivity5.class);
+            startActivity(intent);
         }
     }
 
@@ -84,7 +93,7 @@ public class MainActivity4 extends AppCompatActivity {
             return true;
         }
     }
-    private Boolean ValidateLeaveType(){
+    /*private Boolean ValidateLeaveType(){
         String val=LeaveType.getEditText().getText().toString();
 
         if (val.isEmpty()){
@@ -95,7 +104,7 @@ public class MainActivity4 extends AppCompatActivity {
             LeaveType.setError(null);
             return true;
         }
-    }
+    }*/
 
     private Boolean ValidateLeaveReason(){
         String val=LeaveReason.getEditText().getText().toString();
@@ -112,11 +121,23 @@ public class MainActivity4 extends AppCompatActivity {
 
     private Boolean ValidateStart(){
         String val=StartDate.getEditText().getText().toString();
+        String StartDateVal = "^" +
+                "(?=.*[0-9])" +         //at least 1 digit
+                //"(?=.*[a-z])" +         //at least 1 lower case letter
+                //"(?=.*[A-Z])" +         //at least 1 upper case letter
+                //"(?=.*[a-zA-Z])" +      //any letter
+                //"(?=.*[@#$%^&+=])" +    //at least 1 special character
+                "(?=\\S+$)" +           //no white spaces
+                ".{10,}" +               //at least 10 characters
+                "$";
 
         if (val.isEmpty()){
             StartDate.setError("Start Date cannot be Empty");
             return false;
-        }
+        }/*else if (!val.matches(StartDateVal)) {
+            StartDate.setError("Password is too weak");
+            return false;
+        }*/
         else{
             StartDate.setError(null);
             return true;

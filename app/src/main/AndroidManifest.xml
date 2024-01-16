@@ -6,14 +6,23 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/sreclogo1"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/sreclogo1"
         android:supportsRtl="true"
         android:theme="@style/Theme.Facultymanagement"
         tools:targetApi="31">
         <activity
-            android:name=".Mainactivity6"
+            android:name=".RetrievingLeaveFormActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RecyclerViewActivityActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RetrievingLeaveForm8"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity6"
             android:exported="false" />
         <activity
             android:name=".MainActivity5"

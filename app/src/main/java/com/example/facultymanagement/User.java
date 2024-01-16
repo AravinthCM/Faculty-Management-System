@@ -1,18 +1,16 @@
 package com.example.facultymanagement;
 
-public class UserHelperClass {
+public class User {
+    private String name;
+    private String email;
+    private String phoneNo;
+    private String password;
 
-    String name,email,phoneNo,password;
-
-    public UserHelperClass() {
-
-    }
-
-    public UserHelperClass(String name, String email, String phoneNo,String password) {
+    public User(String name, String email, String phoneNo, String password) {
         this.name = name;
         this.email = email;
         this.phoneNo = phoneNo;
-        this.password=password;
+        this.password = password;
     }
 
     public String getName() {
@@ -35,7 +33,7 @@ public class UserHelperClass {
         return phoneNo;
     }
 
-    public void setPhoneNo(String phoneNo) {
+    public void setPhone(String phoneNo) {
         this.phoneNo = phoneNo;
     }
 
@@ -46,5 +44,4 @@ public class UserHelperClass {
     public void setPassword(String password) {
         this.password = password;
     }
-
 }

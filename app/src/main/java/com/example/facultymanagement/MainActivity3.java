@@ -29,6 +29,14 @@ import com.google.firebase.auth.FirebaseUser;
 
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 public class MainActivity3 extends AppCompatActivity {
 
@@ -50,16 +58,7 @@ public class MainActivity3 extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        Button sub2 = findViewById(R.id.sub2);
-        sub2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent =new Intent(MainActivity3.this, MainActivity5.class);
-                startActivity(intent);
-            }
-        });
 
-        /*
         fullName=findViewById(R.id.fullname);
         password=findViewById(R.id.passs1);
         login=findViewById(R.id.sub2);
@@ -67,34 +66,106 @@ public class MainActivity3 extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email=fullName.getEditText().toString();
-                String getpassword=password.getEditText().toString();
+                if(!ValidateFullname()|!ValidatePassword()){
 
-                login(email,getpassword);
+                }else{
+                    loginUser();
+                }
             }
-        });*/
+        });
+
     }
 
-   /* private void login(String email,String getpassword){
-        firebaseAuth.signInWithEmailAndPassword(email, getpassword)
+    public void loginUser(){
+        String userUserName=fullName.getEditText().getText().toString().trim();
+        String userPassword=password.getEditText().getText().toString().trim();
+
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(userUserName, userPassword)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Login success, update UI or navigate to the next screen
-                            onLoginSuccess();
+                            // Login success
+                            Toast.makeText(MainActivity3.this, "Login successful", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(MainActivity3.this, MainActivity5.class));
+                            finish();
                         } else {
-                            // If login fails, display a message to the user.
-                            Toast.makeText(MainActivity3.this, "Login failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(MainActivity3.this, "Login failed. Please check your email and password.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
-    private void onLoginSuccess() {
-        // Update UI or navigate to the next screen (e.g., HomeActivity)
-        Intent intent = new Intent(MainActivity3.this, MainActivity5.class);
-        startActivity(intent);
-        finish(); // Optionally, finish the login activity to prevent going back
+
+    private Boolean ValidateFullname(){
+        String val=fullName.getEditText().getText().toString();
+
+        if (val.isEmpty()){
+            fullName.setError("UserId cannot be Empty");
+            return false;
+        }
+        else{
+            fullName.setError(null);
+            return true;
+        }
+    }
+    private Boolean ValidatePassword(){
+        String val=password.getEditText().getText().toString();
+
+        if (val.isEmpty()){
+            password.setError("Password cannot be Empty");
+            return false;
+        }
+        else{
+            password.setError(null);
+            return true;
+        }
+    }
+
+    /*public void checkUser(){
+        String userUserName=fullName.getEditText().getText().toString().trim();
+        String userPassword=password.getEditText().getText().toString().trim();
+
+        DatabaseReference reference= FirebaseDatabase.getInstance().getReference("users");
+        Query checkUserDatabase= reference.orderByChild("name").equalTo(userUserName);
+
+        checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    fullName.setError(null);
+                    String passwordFromDB=snapshot.child(userPassword).child("password").getValue(String.class);
+
+                    if(!Objects.equals(passwordFromDB,userPassword)){
+                        fullName.setError(null);
+
+                        String nameFromDB=snapshot.child(userUserName).child("name").getValue(String.class);
+                        String emailFromDB=snapshot.child(userUserName).child("password").getValue(String.class);
+                        String phoneNoFromDB=snapshot.child(userUserName).child("name").getValue(String.class);
+
+                        Intent intent=new Intent(MainActivity3.this,MainActivity5.class);
+
+                        intent.putExtra("name",nameFromDB);
+                        intent.putExtra("email",emailFromDB);
+                        intent.putExtra("phoneNo",phoneNoFromDB);
+                        intent.putExtra("password",passwordFromDB);
+                        startActivity(intent);
+                    }else {
+                        password.setError("Invalid Credentials");
+                        password.requestFocus();
+                    }
+                }else{
+                    fullName.setError("User doesn't exist");
+                    fullName.requestFocus();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }*/
+
+
 }

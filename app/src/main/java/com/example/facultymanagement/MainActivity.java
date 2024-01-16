@@ -19,10 +19,18 @@ public class MainActivity extends AppCompatActivity {
 
 
         Button imageButton = findViewById(R.id.letsgo);
+        Button dummy = findViewById(R.id.dummy);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent =new Intent(MainActivity.this, MainActivity3.class);
+                startActivity(intent);
+            }
+        });
+        dummy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(MainActivity.this, MainActivity5.class);
                 startActivity(intent);
             }
         });

@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -26,7 +25,6 @@ public class MainActivity2 extends AppCompatActivity {
 
     FirebaseDatabase rootnode;
     DatabaseReference reference;
-    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,51 +40,59 @@ public class MainActivity2 extends AppCompatActivity {
             }
         });
 
-        firebaseAuth = FirebaseAuth.getInstance();
         regName = findViewById(R.id.regName);
         regEmail = findViewById(R.id.email);
         regPhoneno = findViewById(R.id.phone);
         regPassword = findViewById(R.id.passs1);
         regBtn = findViewById(R.id.submit);
 
-
         regBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registeruser();
+                registerUser();
             }
         });
     }
 
-    public void registeruser() {
-        String name = regName.getEditText().getText().toString().trim();
-        String email = regEmail.getEditText().getText().toString().trim();
-        String phone = regPhoneno.getEditText().getText().toString().trim();
-        String password = regPassword.getEditText().getText().toString().trim();
+    private void registerUser(){
+
+        String name = regName.getEditText().getText().toString();
+        String email = regEmail.getEditText().getText().toString();
+        String phone = regPhoneno.getEditText().getText().toString();
+        String password = regPassword.getEditText().getText().toString();
+
+        rootnode = FirebaseDatabase.getInstance();
+        reference = rootnode.getReference("users");
 
         if (!validateName() | !validatePassword() | !validatePhoneNo() | !validateEmail()) {
             return;
-        }
-
-
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(MainActivity2.this, "Registration successful!", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getApplicationContext(), MainActivity5.class);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            // If sign-up fails, display a message to the user.
-                            Toast.makeText(MainActivity2.this, "Registration failed. Please try again",
-                                    Toast.LENGTH_SHORT).show();
+        } else{
+            // Implement Firebase registration logic
+            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Registration success
+                                saveUserData(name, email, phone, password);
+                                Toast.makeText(MainActivity2.this, "Registration successful", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(MainActivity2.this, MainActivity3.class));
+                                finish();
+                            } else {
+                                Toast.makeText(MainActivity2.this, "Registration failed. Please try again.", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });;
+
+        }
     }
 
+    private void saveUserData(String name, String email, String phone, String password) {
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
+        User user1 = new User(name, email, phone, password);
+        usersRef.child(userId).setValue(user1);
+    }
 
     private Boolean validateName() {
         String val = regName.getEditText().getText().toString();
@@ -134,7 +140,7 @@ public class MainActivity2 extends AppCompatActivity {
                 //"(?=.*[0-9])" +         //at least 1 digit
                 //"(?=.*[a-z])" +         //at least 1 lower case letter
                 //"(?=.*[A-Z])" +         //at least 1 upper case letter
-                "(?=.*[a-zA-Z])" +      //any letter
+                //"(?=.*[a-zA-Z])" +      //any letter
                 //"(?=.*[@#$%^&+=])" +    //at least 1 special character
                 "(?=\\S+$)" +           //no white spaces
                 ".{4,}" +               //at least 4 characters

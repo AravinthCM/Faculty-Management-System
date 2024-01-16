@@ -54,7 +54,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:id="@+id/fullname"
-                android:hint="User name"
+                android:hint="Email"
                 android:textColorHint="@color/black"
                 style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
                 android:layout_height="wrap_content">
@@ -81,6 +81,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/bblack"
                     android:inputType="textPassword"/>
 
             </com.google.android.material.textfield.TextInputLayout>
