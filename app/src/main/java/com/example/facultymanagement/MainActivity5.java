@@ -1,17 +1,19 @@
 package com.example.facultymanagement;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 public class MainActivity5 extends AppCompatActivity {
-
-
 
 
     @Override
@@ -22,6 +24,8 @@ public class MainActivity5 extends AppCompatActivity {
 
         TextView btn = findViewById(R.id.abc);
         TextView abcde = findViewById(R.id.abcde);
+
+
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -29,7 +33,6 @@ public class MainActivity5 extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         abcde.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,24 +41,53 @@ public class MainActivity5 extends AppCompatActivity {
             }
         });
 
-        ImageButton btn1 = findViewById(R.id.menuxml7);
-        btn1.setOnClickListener(new View.OnClickListener() {
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent =new Intent(MainActivity5.this, MainActivity3.class);
-                startActivity(intent);
-            }
-        });
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
 
-        ImageButton profile = findViewById(R.id.profile);
-        profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent =new Intent(MainActivity5.this, MainActivity6.class);
-                startActivity(intent);
+                if (itemId == R.id.navigation_home) {
+                    startActivity(new Intent(MainActivity5.this, MainActivity5.class));
+                    return true;
+                }
+
+                if (itemId == R.id.navigation_dashboard) {
+                    startActivity(new Intent(MainActivity5.this, MainActivity6.class));
+                    return true;
+                }
+                return false;
             }
         });
 
 
     }
+
+    /*@Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+
+        if (itemId == R.id.navigation_home) {
+
+            Intent intent =new Intent(MainActivity5.this, MainActivity6.class);
+            startActivity(intent);
+            return true;
+        }
+
+        if (itemId == R.id.navigation_dashboard) {
+            // Handle dashboard click
+            // Example: Start a new activity or fragment for the dashboard
+            startActivity(new Intent(this, MainActivity4.class));
+            return true;
+        }
+
+        if (itemId == R.id.navigation_notifications) {
+            // Handle notifications click
+            // Example: Start a new activity or fragment for notifications
+            startActivity(new Intent(this, MainActivity6.class));
+            return true;
+        }
+
+        return false;
+    }*/
 }

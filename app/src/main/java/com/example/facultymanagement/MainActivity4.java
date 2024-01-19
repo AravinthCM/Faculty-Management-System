@@ -9,6 +9,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -20,6 +21,8 @@ public class MainActivity4 extends AppCompatActivity {
     private String adapterView;
     TextInputLayout FacName,LeaveType,LeaveReason,StartDate,EndDate;
     Button SubmitRequest;
+
+    ImageView imageView;
     FirebaseDatabase database;
     DatabaseReference leaveReqReference;
 
@@ -31,7 +34,16 @@ public class MainActivity4 extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
 
         Button btn = findViewById(R.id.reqsub);
+        ImageView img = findViewById(R.id.previous);
         btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(MainActivity4.this, MainActivity5.class);
+                startActivity(intent);
+            }
+        });
+
+        img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent =new Intent(MainActivity4.this, MainActivity5.class);

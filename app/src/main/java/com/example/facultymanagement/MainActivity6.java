@@ -38,34 +38,6 @@ public class MainActivity6 extends AppCompatActivity {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = auth.getCurrentUser();
 
-        if (currentUser != null) {
-            DatabaseReference usersReference = FirebaseDatabase.getInstance().getReference("users");
-            String userId = currentUser.getUid();
 
-            // Retrieve user data based on the user ID
-            usersReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()) {
-                        User user = dataSnapshot.getValue(User.class);
-
-                        // Update the profile TextViews with user data
-                        if (user != null) {
-                            Log.d("UserProfile", "User data retrieved successfully");
-                            profileName.setText(user.getName());
-                            profileEmail.setText(user.getEmail());
-                            profilePhone.setText(user.getPhoneNo());
-                        }else {
-                            Log.e("UserProfile", "User data is null");
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    // Handle errors
-                }
-            });
-        }
     }
 }

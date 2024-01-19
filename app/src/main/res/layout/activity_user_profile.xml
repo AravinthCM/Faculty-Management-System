@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/bbblack"
     tools:context=".MainActivity6">
 
     <LinearLayout
@@ -34,6 +34,7 @@
                 android:layout_toRightOf="@+id/profile_id"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:includeFontPadding="false"
+                android:textColor="@color/black"
                 android:text="Faculty Leave Management system"
                 android:textSize="30dp" />
 
@@ -48,13 +49,14 @@
                 android:fontFamily="sans-serif-condensed-medium"
                 android:includeFontPadding="false"
                 android:text="Name"
+                android:textColor="@color/black"
                 android:textSize="20dp" />
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-100dp"
+            android:layout_marginTop="-60dp"
             android:orientation="vertical"
             android:padding="20dp">
 
@@ -217,7 +219,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="20dp"
+                android:layout_margin="50dp"
                 android:backgroundTint="#B6E6B4"
                 android:text="Edit Profile"
                 android:textColor="@color/bblack" />

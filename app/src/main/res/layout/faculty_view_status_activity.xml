@@ -1,0 +1,50 @@
+<!-- res/layout/item_leave_request.xml -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/textViewFacultyName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Faculty Name"/>
+
+    <TextView
+        android:id="@+id/textViewLeaveReason"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Leave Period"/>
+
+    <TextView
+        android:id="@+id/textViewLeaveStartDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Leave Period"/>
+    <TextView
+        android:id="@+id/textViewLeaveEndDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Leave Period"/>
+    <TextView
+        android:id="@+id/textViewLeaveStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Leave Period"/>
+
+
+    <Button
+        android:id="@+id/btnApprove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Approve"/>
+
+    <Button
+        android:id="@+id/btnDecline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Decline"/>
+
+</LinearLayout>

@@ -4,14 +4,12 @@
     <item>
 
         <shape android:shape="rectangle">
-            <corners android:radius="20dp"/>
-            <gradient
-                android:startColor="@color/bbblack"
-                android:endColor="@color/bbblack">
-            </gradient>
+            <corners
+                android:topLeftRadius="0dp"
+                android:topRightRadius="0dp"/>
+            <solid android:color="#313134"/>
 
         </shape>
 
     </item>
-
 </selector>

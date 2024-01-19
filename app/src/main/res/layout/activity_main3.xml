@@ -4,27 +4,20 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="@color/bbblack"
     android:padding="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="80dp"
+        android:layout_gravity="center"
         android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:transitionName="logo_image"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/fac"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="FACULTY LEAVE MANAGEMENT SYSTEM"
-            android:textSize="20dp"
+            android:textSize="17dp"
             android:transitionName="texttra"
             android:textColor="@color/black"
             android:layout_marginTop="10dp"
@@ -62,7 +55,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/bblack"
+                    android:textColor="@color/white"
                     android:inputType="text"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -81,7 +74,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/bblack"
+                    android:textColor="@color/white"
                     android:inputType="textPassword"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -98,7 +91,7 @@
                 android:id="@+id/sub2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/bbblack"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:textColor="@color/black"
                 android:layout_marginTop="10dp"

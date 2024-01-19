@@ -4,13 +4,11 @@
     <item>
 
         <shape android:shape="rectangle">
-            <corners android:radius="20dp"/>
-            <gradient
-                android:startColor="@color/white"
-                android:endColor="#B6E6B4"/>
-            <stroke
-                android:color="#B6E6B4"
-                android:width="2dp"/>
+            <corners
+                android:bottomLeftRadius="10dp"
+                android:bottomRightRadius="10dp"/>
+            <solid android:color="#313134"/>
+
         </shape>
 
     </item>

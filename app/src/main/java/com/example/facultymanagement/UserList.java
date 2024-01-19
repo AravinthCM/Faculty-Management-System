@@ -37,7 +37,7 @@ public class UserList {
     }
 
     public void setStartdate(String startdate) {
-        startdate = startdate;
+        this.startdate = startdate;
     }
 
     public String getEnddate() {
@@ -45,7 +45,7 @@ public class UserList {
     }
 
     public void setEnddate(String enddate) {
-        enddate = enddate;
+        this.enddate = enddate;
     }
 
     public String getStatus() {
