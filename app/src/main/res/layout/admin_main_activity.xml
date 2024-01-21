@@ -152,14 +152,14 @@
                     android:fontFamily="sans-serif-condensed-medium"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="View Status"
+                    android:text="Review Status"
                     android:textColor="@color/bblack"
                     android:textSize="38dp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Click View Status to view the status of the leave request "
+                    android:text="Click here to approve/decline the leave requests "
                     android:layout_marginStart="25dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
@@ -168,6 +168,8 @@
                     android:textColor="@color/bblack"/>
 
             </LinearLayout>
+
+
         </LinearLayout>
     </ScrollView>
 

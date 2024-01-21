@@ -83,10 +83,8 @@ public class MainActivity4 extends AppCompatActivity {
             leaveReqReference = database.getReference("leaveRequests");
 
             String leaveReqId = leaveReqReference.push().getKey();
-
             LeaveRequestForm help = new LeaveRequestForm(name, reason, dateStart, dateEnd, "pending");
             leaveReqReference.child(leaveReqId).setValue(help);
-
             Toast.makeText(MainActivity4.this,"Leave Form successfully Submitted",Toast.LENGTH_SHORT).show();
             Intent intent=new Intent(MainActivity4.this,MainActivity5.class);
             startActivity(intent);

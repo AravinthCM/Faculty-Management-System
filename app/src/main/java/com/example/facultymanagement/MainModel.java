@@ -1,14 +1,14 @@
 package com.example.facultymanagement;
 
-public class UserList {
+public class MainModel {
 
-    private String facname,leaveType,leavereason,startdate,enddate,status;
+    String facname,leavereason,startdate,enddate,status;
 
-    public UserList() {
+    public MainModel() {
 
     }
 
-    public UserList(String facname, String leavereason, String startdate, String enddate, String status) {
+    public MainModel(String facname, String leavereason, String startdate, String enddate, String status) {
         this.facname = facname;
         this.leavereason = leavereason;
         this.startdate = startdate;

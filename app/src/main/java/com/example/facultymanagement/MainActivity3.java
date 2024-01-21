@@ -59,6 +59,15 @@ public class MainActivity3 extends AppCompatActivity {
             }
         });
 
+        Button adminonto = findViewById(R.id.adminonto);
+        adminonto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(MainActivity3.this, AdminLoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
         fullName=findViewById(R.id.fullname);
         password=findViewById(R.id.passs1);
         login=findViewById(R.id.sub2);

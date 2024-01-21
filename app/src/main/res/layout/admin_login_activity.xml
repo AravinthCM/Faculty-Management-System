@@ -29,8 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-condensed-medium"
-            android:text="WELCOME BACK!!!"
-            android:transitionName="texttra"
+            android:text="ADMIN"
             android:textColor="@color/black"
             android:gravity="left"
             android:layout_marginStart="10dp"
@@ -88,7 +87,7 @@
                 android:gravity="right"/>
 
             <Button
-                android:id="@+id/sub2"
+                android:id="@+id/adminSUB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/bbblack"
@@ -96,25 +95,6 @@
                 android:textColor="@color/black"
                 android:layout_marginTop="10dp"
                 android:text="Submit"/>
-
-            <Button
-                android:id="@+id/already"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="New User ? click to Register"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:backgroundTint="#00000000"
-                android:textColor="@color/black"/>
-
-            <Button
-                android:id="@+id/adminonto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/bbblack"
-                android:text="Admin ?"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:textColor="@color/black"
-                android:textSize="18dp"/>
 
 
         </LinearLayout>

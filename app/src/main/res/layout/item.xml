@@ -15,30 +15,7 @@
         android:textSize="16dp"
         android:padding="20dp"
         android:textColor="@color/bblack"
-        android:background="@drawable/topbanner"/>
+        android:background="@drawable/banner1"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bottombanner"
-        android:layout_marginTop="-10dp"
-        android:orientation="horizontal">
-    <Button
-        android:id="@+id/btnApp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Approve"
-        android:layout_marginStart="10dp"
-        android:layout_marginBottom="5dp"
-        android:backgroundTint="@color/grey"/>
-    <Button
-        android:id="@+id/btnDecc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Decline"
-        android:layout_marginStart="5dp"
-        android:layout_marginBottom="5dp"
-        android:backgroundTint="@color/grey"/>
 
-    </LinearLayout>
 </LinearLayout>
