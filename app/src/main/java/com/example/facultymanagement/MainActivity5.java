@@ -1,20 +1,32 @@
 package com.example.facultymanagement;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity5 extends AppCompatActivity {
 
+
+    DrawerLayout drawerLayout;
+    MaterialToolbar materialToolbar;
+    FrameLayout frameLayout;
+
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,10 +34,19 @@ public class MainActivity5 extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main5);
 
+
+        drawerLayout = findViewById(R.id.drawerLayout);
+        materialToolbar=findViewById(R.id.materialToolbar);
+        frameLayout=findViewById(R.id.frameLayout);
+        navigationView=findViewById(R.id.navigationView);
+
+        ActionBarDrawerToggle toggle=new ActionBarDrawerToggle(
+                MainActivity5.this,drawerLayout,materialToolbar,R.string.drawer_close,R.string.drawer_open);
+        drawerLayout.addDrawerListener(toggle);
+
+
         TextView btn = findViewById(R.id.abc);
         TextView abcde = findViewById(R.id.abcde);
-
-
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,6 +81,29 @@ public class MainActivity5 extends AppCompatActivity {
             }
         });
 
+
+        materialToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                if (item.getItemId()==R.id.nav_admin){
+                    startActivity(new Intent(MainActivity5.this, AdminLoginActivity.class));
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item.getItemId()==R.id.nav_admin){
+                    startActivity(new Intent(MainActivity5.this, AdminLoginActivity.class));
+                    return true;
+                }
+                return false;
+            }
+        });
 
     }
 }

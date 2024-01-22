@@ -1,0 +1,45 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:title="" />
+
+    <item
+        android:title="" />
+
+    <item
+        android:title="" />
+    <group
+        android:id="@+id/grp1">
+
+        <item
+            android:id="@+id/nav_about"
+            android:iconTint="@color/black"
+            android:icon="@drawable/admin_panel"
+            android:title="About" />
+
+        <item
+            android:id="@+id/nav_help"
+            android:iconTint="@color/black"
+            android:icon="@drawable/admin_panel"
+            android:title="Help" />
+
+    </group>
+
+    <group
+        android:id="@+id/grp2">
+
+        <item
+            android:id="@+id/nav_admin"
+            android:iconTint="@color/black"
+            android:icon="@drawable/admin_panel"
+            android:title="Admin" />
+
+            <item
+                android:id="@+id/nav_logout"
+                android:iconTint="@color/black"
+                android:icon="@drawable/logout"
+                android:title="Logout" />
+    </group>
+
+</menu>
