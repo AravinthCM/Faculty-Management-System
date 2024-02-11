@@ -2,14 +2,13 @@ package com.example.facultymanagement;
 
 public class MainModel {
 
-    String facname,leavereason,startdate,enddate,status;
-
+    String facname,leavetype,leavereason,startdate,enddate,status;
     public MainModel() {
 
     }
-
-    public MainModel(String facname, String leavereason, String startdate, String enddate, String status) {
+    public MainModel(String facname,String leavetype, String leavereason, String startdate, String enddate, String status) {
         this.facname = facname;
+        this.leavetype = leavetype;
         this.leavereason = leavereason;
         this.startdate = startdate;
         this.enddate = enddate;
@@ -24,6 +23,13 @@ public class MainModel {
         this.facname = facname;
     }
 
+    public String getLeavetype() {
+        return leavetype;
+    }
+
+    public void setLeavetype(String leavetype) {
+        this.leavetype = leavetype;
+    }
     public String getLeavereason() {
         return leavereason;
     }

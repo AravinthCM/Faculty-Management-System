@@ -40,6 +40,29 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Leave Type"
+            android:textSize="20dp"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/bblack"/>
+
+        <TextView
+            android:layout_marginStart="04dp"
+            android:id="@+id/leaveEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="type"
+            android:textColor="@color/bbblack"
+            android:textSize="20dp"/>
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"

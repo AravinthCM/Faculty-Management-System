@@ -50,6 +50,7 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MainModel, MainAdapter.
     @Override
     protected void onBindViewHolder(@NonNull myViewHolder holder, int position, @NonNull MainModel model) {
         holder.name.setText(model.getFacname());
+        holder.type.setText(model.getLeavetype());
         holder.reason.setText(model.getLeavereason());
         holder.startDate.setText(model.getStartdate());
         holder.endDate.setText(model.getEnddate());
@@ -67,6 +68,7 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MainModel, MainAdapter.
                 View view = dialogPlus.getHolderView();
 
                 TextView name = view.findViewById(R.id.nameEdit);
+                TextView type = view.findViewById(R.id.leaveEdit);
                 TextView reason = view.findViewById(R.id.reasonEdit);
                 TextView startDate = view.findViewById(R.id.stdEdit);
                 TextView endDate = view.findViewById(R.id.endEdit);
@@ -76,6 +78,7 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MainModel, MainAdapter.
                 Button btnDecline = view.findViewById(R.id.btnDecline);
 
                 name.setText(model.getFacname());
+                type.setText(model.getLeavetype());
                 reason.setText(model.getLeavereason());
                 startDate.setText(model.getStartdate());
                 endDate.setText(model.getEnddate());
@@ -132,10 +135,9 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MainModel, MainAdapter.
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.main_item, parent, false);
         return new myViewHolder(view);
     }
-
     class myViewHolder extends RecyclerView.ViewHolder {
         ImageView img;
-        TextView name, reason, startDate, endDate, status;
+        TextView name,type, reason, startDate, endDate, status;
         Button btnEdit, btnApprove, btnDecline;
 
         public myViewHolder(@NonNull View itemView) {
@@ -144,10 +146,10 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MainModel, MainAdapter.
             img = (ImageView) itemView.findViewById(R.id.imgimg);
             name = (TextView) itemView.findViewById(R.id.nameText);
             reason = (TextView) itemView.findViewById(R.id.leaveReason);
+            type = (TextView) itemView.findViewById(R.id.leaveType);
             startDate = (TextView) itemView.findViewById(R.id.startDate);
             endDate = (TextView) itemView.findViewById(R.id.endDate);
             status = (TextView) itemView.findViewById(R.id.status);
-
             btnEdit = (Button) itemView.findViewById(R.id.btnEdit);
 
         }

@@ -10,8 +10,6 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class TypesOfReqActivityActivity extends AppCompatActivity {
-
-
     RecyclerView recyclerView;
     MainAdapter mainAdapter;
     @Override
