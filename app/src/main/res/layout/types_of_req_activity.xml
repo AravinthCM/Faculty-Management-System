@@ -43,7 +43,7 @@
         android:layout_gravity="center"
         android:fontFamily="sans-serif-condensed-medium"
         android:includeFontPadding="false"
-        android:text="Review"
+        android:text="Admin Review"
         android:textColor="@color/black"
         android:textSize="20dp" />
 

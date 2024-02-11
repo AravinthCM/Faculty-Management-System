@@ -25,9 +25,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-
-
-
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,12 +41,15 @@ public class MainActivity3 extends AppCompatActivity {
     Button login;
     private FirebaseAuth firebaseAuth;
 
+    ProgressBar progressBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
 
+        progressBar=findViewById(R.id.progress1);
         Button imageButton = findViewById(R.id.already);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +78,7 @@ public class MainActivity3 extends AppCompatActivity {
                 if(!ValidateFullname()|!ValidatePassword()){
 
                 }else{
+
                     loginUser();
                 }
             }
@@ -93,13 +94,14 @@ public class MainActivity3 extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        progressBar.setVisibility(View.VISIBLE);
+
                         if (task.isSuccessful()) {
-                            // Login success
+                            progressBar.setVisibility(View.GONE);
                             Toast.makeText(MainActivity3.this, "Login successful", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(MainActivity3.this, MainActivity5.class));
                             finish();
                         } else {
-                            // If sign in fails, display a message to the user.
                             Toast.makeText(MainActivity3.this, "Login failed. Please check your email and password.", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -130,51 +132,4 @@ public class MainActivity3 extends AppCompatActivity {
             return true;
         }
     }
-
-    /*public void checkUser(){
-        String userUserName=fullName.getEditText().getText().toString().trim();
-        String userPassword=password.getEditText().getText().toString().trim();
-
-        DatabaseReference reference= FirebaseDatabase.getInstance().getReference("users");
-        Query checkUserDatabase= reference.orderByChild("name").equalTo(userUserName);
-
-        checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
-                    fullName.setError(null);
-                    String passwordFromDB=snapshot.child(userPassword).child("password").getValue(String.class);
-
-                    if(!Objects.equals(passwordFromDB,userPassword)){
-                        fullName.setError(null);
-
-                        String nameFromDB=snapshot.child(userUserName).child("name").getValue(String.class);
-                        String emailFromDB=snapshot.child(userUserName).child("password").getValue(String.class);
-                        String phoneNoFromDB=snapshot.child(userUserName).child("name").getValue(String.class);
-
-                        Intent intent=new Intent(MainActivity3.this,MainActivity5.class);
-
-                        intent.putExtra("name",nameFromDB);
-                        intent.putExtra("email",emailFromDB);
-                        intent.putExtra("phoneNo",phoneNoFromDB);
-                        intent.putExtra("password",passwordFromDB);
-                        startActivity(intent);
-                    }else {
-                        password.setError("Invalid Credentials");
-                        password.requestFocus();
-                    }
-                }else{
-                    fullName.setError("User doesn't exist");
-                    fullName.requestFocus();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }*/
-
-
 }

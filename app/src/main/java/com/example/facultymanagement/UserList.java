@@ -2,14 +2,15 @@ package com.example.facultymanagement;
 
 public class UserList {
 
-    private String facname,leaveType,leavereason,startdate,enddate,status;
+    private String facname,leavetype,leavereason,startdate,enddate,status;
 
     public UserList() {
 
     }
 
-    public UserList(String facname, String leavereason, String startdate, String enddate, String status) {
+    public UserList(String facname,String leavetype, String leavereason, String startdate, String enddate, String status) {
         this.facname = facname;
+        this.leavetype = leavetype;
         this.leavereason = leavereason;
         this.startdate = startdate;
         this.enddate = enddate;
@@ -22,6 +23,14 @@ public class UserList {
 
     public void setFacname(String facname) {
         this.facname = facname;
+    }
+
+    public String getLeaveType() {
+        return leavetype;
+    }
+
+    public void setLeaveType(String leaveType) {
+        this.leavetype = leavetype;
     }
 
     public String getLeavereason() {

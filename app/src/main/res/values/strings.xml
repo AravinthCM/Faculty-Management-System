@@ -10,4 +10,12 @@
         <item>Vacation</item>
         <item>Personal leave</item>
     </string-array>
+
+    <string-array name="leave_types">
+        <item>Personal Leave</item>
+        <item>Sick Leave</item>
+        <item>Maternity Leave</item>
+        <item>LOP</item>
+        <!-- Add more leave types as needed -->
+    </string-array>
 </resources>

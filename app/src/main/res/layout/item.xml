@@ -17,5 +17,4 @@
         android:textColor="@color/bblack"
         android:background="@drawable/banner1"/>
 
-
 </LinearLayout>

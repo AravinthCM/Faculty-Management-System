@@ -26,10 +26,23 @@ public class MainActivity4 extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference leaveReqReference;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main4);
+
+        Spinner leaveTypeSpinner;
+        String selectedLeaveType;
+
+
+        leaveTypeSpinner = findViewById(R.id.spinnerLeaveType);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.leave_types, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        leaveTypeSpinner.setAdapter(adapter);
+
+
 
         database = FirebaseDatabase.getInstance();
 
@@ -53,7 +66,6 @@ public class MainActivity4 extends AppCompatActivity {
 
 
         FacName=findViewById(R.id.fullname);
-       // LeaveType=findViewById(R.id.leaveType);
         LeaveReason=findViewById(R.id.phone);
         StartDate=findViewById(R.id.start);
         EndDate=findViewById(R.id.end);
@@ -70,11 +82,14 @@ public class MainActivity4 extends AppCompatActivity {
 
     public void leaveRequest(){
 
+        Spinner leaveTypeSpinner=findViewById(R.id.spinnerLeaveType);
+
         String name = FacName.getEditText().getText().toString();
         String reason = LeaveReason.getEditText().getText().toString();
-        //String type = LeaveType.getEditText().getText().toString();
         String dateStart = StartDate.getEditText().getText().toString();
         String dateEnd = EndDate.getEditText().getText().toString();
+        String leaveType = leaveTypeSpinner.getSelectedItem().toString();
+
 
         if(!ValidateFacultyName() | !ValidateLeaveReason() | !ValidateStart() |!ValidateEnd()){
             return;
@@ -83,7 +98,7 @@ public class MainActivity4 extends AppCompatActivity {
             leaveReqReference = database.getReference("leaveRequests");
 
             String leaveReqId = leaveReqReference.push().getKey();
-            LeaveRequestForm help = new LeaveRequestForm(name, reason, dateStart, dateEnd, "pending");
+            LeaveRequestForm help = new LeaveRequestForm(name, leaveType, reason, dateStart, dateEnd, "pending");
             leaveReqReference.child(leaveReqId).setValue(help);
             Toast.makeText(MainActivity4.this,"Leave Form successfully Submitted",Toast.LENGTH_SHORT).show();
             Intent intent=new Intent(MainActivity4.this,MainActivity5.class);

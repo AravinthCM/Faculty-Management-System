@@ -1,5 +1,13 @@
 package com.example.facultymanagement;
 
+import static android.content.Context.NOTIFICATION_SERVICE;
+//import static androidx.appcompat.graphics.drawable.DrawableContainerCompat.Api21Impl.getResources;
+import static androidx.core.content.ContextCompat.getSystemService;
+//import com.google.firebase.messaging.FirebaseMessaging;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -24,14 +33,16 @@ import com.orhanobut.dialogplus.ViewHolder;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainAdapter extends FirebaseRecyclerAdapter<MainModel,MainAdapter.myViewHolder> {
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+//import android.support.v4.app.NotificationCompat;
+import android.view.View;
+import android.content.Intent;
+import android.app.PendingIntent;
+import android.app.NotificationManager;
 
-    /**
-     * Initialize a {@link RecyclerView.Adapter} that listens to a Firebase query. See
-     * {@link FirebaseRecyclerOptions} for configuration options.
-     *
-     * @param options
-     */
+public class MainAdapter extends FirebaseRecyclerAdapter<MainModel, MainAdapter.myViewHolder> {
+
     public MainAdapter(@NonNull FirebaseRecyclerOptions<MainModel> options) {
         super(options);
     }
@@ -44,91 +55,101 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MainModel,MainAdapter.m
         holder.endDate.setText(model.getEnddate());
         holder.status.setText(model.getStatus());
 
-        //Glide.with(holder.img)
-
         holder.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final DialogPlus dialogPlus=DialogPlus.newDialog(holder.img.getContext())
+                final DialogPlus dialogPlus = DialogPlus.newDialog(holder.img.getContext())
                         .setContentHolder(new ViewHolder(R.layout.update_popup))
-                        .setExpanded(true,1000)
+                        .setExpanded(true, 1000)
                         .create();
 
                 dialogPlus.show();
-
                 View view = dialogPlus.getHolderView();
 
-                TextView name=view.findViewById(R.id.nameEdit);
-                TextView reason=view.findViewById(R.id.reasonEdit);
-                TextView startDate=view.findViewById(R.id.stdEdit);
-                TextView endDate=view.findViewById(R.id.endEdit);
-                EditText status=view.findViewById(R.id.txtStatus);
+                TextView name = view.findViewById(R.id.nameEdit);
+                TextView reason = view.findViewById(R.id.reasonEdit);
+                TextView startDate = view.findViewById(R.id.stdEdit);
+                TextView endDate = view.findViewById(R.id.endEdit);
+                TextView status = view.findViewById(R.id.stsss);
 
-                Button btnUpdate=view.findViewById(R.id.btnUpdate);
+                Button btnApprove = view.findViewById(R.id.btnApprove);
+                Button btnDecline = view.findViewById(R.id.btnDecline);
 
                 name.setText(model.getFacname());
                 reason.setText(model.getLeavereason());
                 startDate.setText(model.getStartdate());
                 endDate.setText(model.getEnddate());
-
                 status.setText(model.getStatus());
                 dialogPlus.show();
-
-                btnUpdate.setOnClickListener(new View.OnClickListener() {
+                btnApprove.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Map<String,Object> map=new HashMap<>();
-                        map.put("status",status.getText().toString());
+                        updateStatus(holder.getAdapterPosition(), "Approved");
+                        dialogPlus.dismiss();
+                        Toast.makeText(v.getContext(), "Leave request approved.", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
-                        FirebaseDatabase.getInstance().getReference().child("leaveRequests")
-                                .child(getRef(position).getKey()).updateChildren(map)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        Toast.makeText(holder.status.getContext(), "Data Updated Successfully.", Toast.LENGTH_SHORT).show();
-                                        dialogPlus.dismiss();
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(holder.status.getContext(), "Error while updating.", Toast.LENGTH_SHORT).show();
-                                        dialogPlus.dismiss();
-                                    }
-                                });
+                btnDecline.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        updateStatus(holder.getAdapterPosition(), "Declined");
+                        dialogPlus.dismiss();
+                        Toast.makeText(v.getContext(), "Leave request declined.", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
         });
     }
 
+    private void updateStatus(int position, String newStatus) {
+        String requestId = getRef(position).getKey();
+        Context context;
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("status", newStatus);
+
+        FirebaseDatabase.getInstance().getReference().child("leaveRequests")
+                .child(requestId)
+                .updateChildren(map)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        // Toast.makeText(.this, "Done.", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        //Toast.makeText(context, "Error while updating.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
     @NonNull
     @Override
     public myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.main_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.main_item, parent, false);
         return new myViewHolder(view);
     }
 
-    class myViewHolder extends RecyclerView.ViewHolder{
-
+    class myViewHolder extends RecyclerView.ViewHolder {
         ImageView img;
-        TextView name,reason,startDate,endDate,status;
-        Button btnEdit;
-
+        TextView name, reason, startDate, endDate, status;
+        Button btnEdit, btnApprove, btnDecline;
 
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            img=(ImageView) itemView.findViewById(R.id.imgimg);
-            name=(TextView) itemView.findViewById(R.id.nameText);
-            reason=(TextView) itemView.findViewById(R.id.leaveReason);
-            startDate=(TextView) itemView.findViewById(R.id.startDate);
-            endDate=(TextView) itemView.findViewById(R.id.endDate);
-            status=(TextView) itemView.findViewById(R.id.status);
+            img = (ImageView) itemView.findViewById(R.id.imgimg);
+            name = (TextView) itemView.findViewById(R.id.nameText);
+            reason = (TextView) itemView.findViewById(R.id.leaveReason);
+            startDate = (TextView) itemView.findViewById(R.id.startDate);
+            endDate = (TextView) itemView.findViewById(R.id.endDate);
+            status = (TextView) itemView.findViewById(R.id.status);
 
-            btnEdit=(Button) itemView.findViewById(R.id.btnEdit);
+            btnEdit = (Button) itemView.findViewById(R.id.btnEdit);
 
         }
     }
 }
-

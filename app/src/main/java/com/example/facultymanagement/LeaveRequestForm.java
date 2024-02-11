@@ -7,8 +7,9 @@ public class LeaveRequestForm {
     public LeaveRequestForm() {
     }
 
-    public LeaveRequestForm(String facname, String leavereason, String startdate, String enddate, String status) {
+    public LeaveRequestForm(String facname,String leavetype ,String leavereason, String startdate, String enddate, String status) {
         this.facname = facname;
+        this.leavetype = leavetype;
         this.leavereason = leavereason;
         this.startdate = startdate;
         this.enddate = enddate;
@@ -23,6 +24,14 @@ public class LeaveRequestForm {
         this.facname = facname;
     }
 
+
+    public String getLeavetype() {
+        return leavetype;
+    }
+
+    public void setLeavetype(String leavereason) {
+        this.leavetype = leavetype;
+    }
 
     public String getLeavereason() {
         return leavereason;

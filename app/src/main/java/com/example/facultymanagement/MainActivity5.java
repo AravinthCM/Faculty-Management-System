@@ -15,9 +15,12 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity5 extends AppCompatActivity {
 
@@ -33,6 +36,19 @@ public class MainActivity5 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main5);
+
+
+        FirebaseMessaging.getInstance().subscribeToTopic("Test")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String msg="Done";
+                        if(!task.isSuccessful()){
+                            msg="Failed";
+                        }
+                    }
+
+                });
 
 
         drawerLayout = findViewById(R.id.drawerLayout);
