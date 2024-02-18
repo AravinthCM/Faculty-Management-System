@@ -2,19 +2,20 @@ package com.example.facultymanagement;
 
 public class UserList {
 
-    private String facname,leavetype,leavereason,startdate,enddate,status;
+    private String facname,leavetype,leavereason,startdate,enddate,status,userUid;
 
     public UserList() {
 
     }
 
-    public UserList(String facname,String leavetype, String leavereason, String startdate, String enddate, String status) {
+    public UserList(String facname,String leavetype, String leavereason, String startdate, String enddate, String status,String userUid) {
         this.facname = facname;
         this.leavetype = leavetype;
         this.leavereason = leavereason;
         this.startdate = startdate;
         this.enddate = enddate;
         this.status = status;
+        this.userUid=userUid;
     }
 
     public String getFacname() {
@@ -63,5 +64,13 @@ public class UserList {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getUserUid() {
+        return userUid;
+    }
+
+    public void setUserUid(String userUid) {
+        this.userUid = userUid;
     }
 }

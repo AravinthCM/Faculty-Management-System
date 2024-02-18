@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,12 +36,13 @@ public class RetrievingLeaveForm8 extends AppCompatActivity{
 
 
     private ListView listView;
-
     ImageView img;
     private DatabaseReference leaveRequestsRef;
-
     NotificationCompat.Builder notification;
     private static final int uniqueID = 12345;
+
+    // Declare a FirebaseAuth object
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +50,8 @@ public class RetrievingLeaveForm8 extends AppCompatActivity{
 
         notification = new NotificationCompat.Builder(this, "default");
         notification.setAutoCancel(false);
+
+        mAuth = FirebaseAuth.getInstance();
 
         img=findViewById(R.id.menu);
         img.setOnClickListener(new View.OnClickListener() {
@@ -62,15 +67,21 @@ public class RetrievingLeaveForm8 extends AppCompatActivity{
         ArrayAdapter adapter=new ArrayAdapter<String>(this,R.layout.item,R.id.textView,list);
 
         listView.setAdapter(adapter);
+        FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        DatabaseReference reference=FirebaseDatabase.getInstance().getReference().child("leaveRequests");
-        reference.addValueEventListener(new ValueEventListener() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("leaveRequests");
+        reference.orderByChild("userUid").equalTo(currentUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();
-                for (DataSnapshot snapshot1:snapshot.getChildren()){
-                    UserList info=snapshot1.getValue(UserList.class);
-                    String txt="Name:            "+info.getFacname()+"\n\n"+"Leave Type:  "+info.getLeaveType()+"\n\n"+"Reason:         "+ info.getLeavereason()+"\n\n"+"Start Date:     "+info.getStartdate()+"\n\n"+"End Date:      "+info.getEnddate()+"\n\n"+"Status:           "+info.getStatus();
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    LeaveRequestForm info = snapshot1.getValue(LeaveRequestForm.class);
+                    String txt = "Name:            " + info.getFacname() + "\n\n" +
+                            "Leave Type:  " + info.getLeavetype() + "\n\n" +
+                            "Reason:         " + info.getLeavereason() + "\n\n" +
+                            "Start Date:     " + info.getStartdate() + "\n\n" +
+                            "End Date:      " + info.getEnddate() + "\n\n" +
+                            "Status:           " + info.getStatus();
                     list.add(txt);
                 }
                 adapter.notifyDataSetChanged();
@@ -78,7 +89,7 @@ public class RetrievingLeaveForm8 extends AppCompatActivity{
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                // Handle onCancelled
             }
         });
     }

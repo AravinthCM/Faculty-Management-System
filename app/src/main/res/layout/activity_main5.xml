@@ -32,7 +32,7 @@
                 app:buttonGravity="center_vertical"
                 app:titleMarginStart="40dp"
                 app:titleMarginTop="10dp"
-                app:titleCentered="true"
+                app:titleTextAppearance="@style/ShapeAppearance.MaterialComponents.Tooltip"
                 android:paddingStart="15dp"
                 app:titleTextColor="@color/black"/>
 
@@ -195,7 +195,7 @@
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/nav_menu"
         app:itemTextColor="@color/black"
-        app:itemIconSize="30dp"
+        app:itemIconSize="40dp"
         app:itemIconPadding="20dp"
         app:itemIconTint="@color/black"
         android:layout_gravity="start"/>

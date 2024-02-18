@@ -12,14 +12,14 @@ import com.google.firebase.database.FirebaseDatabase;
 public class TypesOfReqActivityActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     MainAdapter mainAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.types_of_req_activity);
 
-        recyclerView = (RecyclerView) findViewById(R.id.rv);
+        recyclerView = findViewById(R.id.rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
 
         FirebaseRecyclerOptions<MainModel> options =
                 new FirebaseRecyclerOptions.Builder<MainModel>()

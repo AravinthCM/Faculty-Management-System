@@ -35,7 +35,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="10dp"
                 android:textColor="@color/bbblack"
-                android:textSize="30dp"/>
+                android:textSize="30sp"/>
 
         </LinearLayout>
 
@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:text="Name"
                 android:fontFamily="sans-serif-condensed-medium"
-                android:textSize="22dp"
+                android:textSize="22sp"
                 android:textColor="@color/black"/>
 
 
@@ -61,7 +61,7 @@
                 android:text="name"
                 android:layout_marginStart="64dp"
                 android:textColor="@color/bbblack"
-                android:textSize="30dp"/>
+                android:textSize="20sp"/>
 
 
         </LinearLayout>
@@ -76,18 +76,18 @@
                 android:layout_height="wrap_content"
                 android:text="Reason"
                 android:fontFamily="sans-serif-condensed-medium"
-                android:textSize="22dp"
+                android:textSize="22sp"
                 android:textColor="@color/black"/>
 
-        <TextView
-            android:layout_marginStart="50dp"
-            android:id="@+id/leaveReason"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-condensed-medium"
-            android:text="reason"
-            android:textColor="@color/bbblack"
-            android:textSize="20dp"/>
+            <TextView
+                android:layout_marginStart="50dp"
+                android:id="@+id/leaveReason"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:text="reason"
+                android:textColor="@color/bbblack"
+                android:textSize="20sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -100,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:text="Leave Type"
                 android:fontFamily="sans-serif-condensed-medium"
-                android:textSize="22dp"
+                android:textSize="22sp"
                 android:textColor="@color/black"/>
 
             <TextView
@@ -111,7 +111,7 @@
                 android:fontFamily="sans-serif-condensed-medium"
                 android:text="type"
                 android:textColor="@color/bbblack"
-                android:textSize="20dp"/>
+                android:textSize="20sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -124,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:text="Start Date"
                 android:fontFamily="sans-serif-condensed-medium"
-                android:textSize="22dp"
+                android:textSize="22sp"
                 android:textColor="@color/black"/>
 
             <TextView
@@ -135,7 +135,7 @@
                 android:fontFamily="sans-serif-condensed-medium"
                 android:text="start date"
                 android:textColor="@color/bbblack"
-                android:textSize="20dp"/>
+                android:textSize="20sp"/>
         </LinearLayout>
 
 
@@ -149,7 +149,7 @@
                 android:layout_height="wrap_content"
                 android:text="End Date"
                 android:fontFamily="sans-serif-condensed-medium"
-                android:textSize="22dp"
+                android:textSize="22sp"
                 android:textColor="@color/black"/>
 
             <TextView
@@ -160,21 +160,9 @@
                 android:fontFamily="sans-serif-condensed-medium"
                 android:text="end date"
                 android:textColor="@color/bbblack"
-                android:textSize="20dp"/>
+                android:textSize="20sp"/>
 
         </LinearLayout>
-
-        <Button
-
-            android:id="@+id/btnEdit"
-            android:layout_width="200dp"
-            android:layout_height="match_parent"
-            android:backgroundTint="@color/grey"
-            android:layout_marginTop="10dp"
-            android:text="Approve/Decline"
-            android:textSize="18dp"
-            android:layout_gravity="center"
-            android:textColor="@color/bbblack"/>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

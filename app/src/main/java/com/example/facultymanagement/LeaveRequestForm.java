@@ -3,17 +3,20 @@ package com.example.facultymanagement;
 public class LeaveRequestForm {
 
     String facname,leavetype,leavereason,startdate,enddate,status;
+    private String userUid;  // Add this field
+
 
     public LeaveRequestForm() {
     }
 
-    public LeaveRequestForm(String facname,String leavetype ,String leavereason, String startdate, String enddate, String status) {
+    public LeaveRequestForm(String facname,String leavetype ,String leavereason, String startdate, String enddate, String status,String userUid) {
         this.facname = facname;
         this.leavetype = leavetype;
         this.leavereason = leavereason;
         this.startdate = startdate;
         this.enddate = enddate;
         this.status=status;
+        this.userUid=userUid;
     }
 
     public String getFacname() {
@@ -29,10 +32,10 @@ public class LeaveRequestForm {
         return leavetype;
     }
 
-    public void setLeavetype(String leavereason) {
+
+    public void setLeavetype(String leavetype) {
         this.leavetype = leavetype;
     }
-
     public String getLeavereason() {
         return leavereason;
     }
@@ -46,7 +49,7 @@ public class LeaveRequestForm {
     }
 
     public void setStartdate(String startdate) {
-        startdate = startdate;
+        this.startdate = startdate;
     }
 
     public String getEnddate() {
@@ -54,9 +57,8 @@ public class LeaveRequestForm {
     }
 
     public void setEnddate(String enddate) {
-        enddate = enddate;
+        this.enddate = enddate;
     }
-
     public String getStatus() {
         return status;
     }
@@ -64,4 +66,19 @@ public class LeaveRequestForm {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public String getuserUid() {
+        return userUid;
+    }
+
+    public void setuserUid(String userUid) {
+        this.userUid = userUid;
+    }
 }
+
+/*
+
+
+
+
+*/

@@ -26,6 +26,8 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
@@ -107,27 +109,31 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MainModel, MainAdapter.
 
     private void updateStatus(int position, String newStatus) {
         String requestId = getRef(position).getKey();
-        Context context;
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        Map<String, Object> map = new HashMap<>();
-        map.put("status", newStatus);
+        if (currentUser != null && requestId != null) {
+            String currentUserId = currentUser.getUid();
 
-        FirebaseDatabase.getInstance().getReference().child("leaveRequests")
-                .child(requestId)
-                .updateChildren(map)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        // Toast.makeText(.this, "Done.", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        //Toast.makeText(context, "Error while updating.", Toast.LENGTH_SHORT).show();
-                    }
-                });
+            Map<String, Object> map = new HashMap<>();
+            map.put("status", newStatus);
+
+            // Update status in the current user's "requests" node
+            FirebaseDatabase.getInstance().getReference().child("users").child(currentUserId).child("requests").child(requestId).updateChildren(map)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            // Toast.makeText(context, "Done.", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            // Toast.makeText(context, "Error while updating.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
     }
+
 
     @NonNull
     @Override
@@ -142,7 +148,6 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MainModel, MainAdapter.
 
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
-
             img = (ImageView) itemView.findViewById(R.id.imgimg);
             name = (TextView) itemView.findViewById(R.id.nameText);
             reason = (TextView) itemView.findViewById(R.id.leaveReason);
@@ -151,7 +156,6 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MainModel, MainAdapter.
             endDate = (TextView) itemView.findViewById(R.id.endDate);
             status = (TextView) itemView.findViewById(R.id.status);
             btnEdit = (Button) itemView.findViewById(R.id.btnEdit);
-
         }
     }
 }

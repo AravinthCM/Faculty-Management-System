@@ -50,6 +50,7 @@ public class MainActivity3 extends AppCompatActivity {
         setContentView(R.layout.activity_main3);
 
         progressBar=findViewById(R.id.progress1);
+
         Button imageButton = findViewById(R.id.already);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +79,6 @@ public class MainActivity3 extends AppCompatActivity {
                 if(!ValidateFullname()|!ValidatePassword()){
 
                 }else{
-
                     loginUser();
                 }
             }

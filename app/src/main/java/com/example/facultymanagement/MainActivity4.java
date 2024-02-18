@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity4 extends AppCompatActivity {
     private String adapterView;
@@ -26,6 +28,8 @@ public class MainActivity4 extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference leaveReqReference;
 
+    String userUid;
+
 
 
     @Override
@@ -35,6 +39,8 @@ public class MainActivity4 extends AppCompatActivity {
 
         Spinner leaveTypeSpinner;
         String selectedLeaveType;
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
 
 
         leaveTypeSpinner = findViewById(R.id.spinnerLeaveType);
@@ -71,41 +77,47 @@ public class MainActivity4 extends AppCompatActivity {
         EndDate=findViewById(R.id.end);
         SubmitRequest=findViewById(R.id.reqsub);
 
-        SubmitRequest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                leaveRequest();
-            }
-        });
+        if (currentUser != null) {
+            userUid = currentUser.getUid();
 
+
+            SubmitRequest.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    leaveRequest();
+                }
+            });
+        }
     }
 
-    public void leaveRequest(){
-
-        Spinner leaveTypeSpinner=findViewById(R.id.spinnerLeaveType);
-
+    public void leaveRequest() {
+        Spinner leaveTypeSpinner = findViewById(R.id.spinnerLeaveType);
         String name = FacName.getEditText().getText().toString();
         String reason = LeaveReason.getEditText().getText().toString();
         String dateStart = StartDate.getEditText().getText().toString();
         String dateEnd = EndDate.getEditText().getText().toString();
         String leaveType = leaveTypeSpinner.getSelectedItem().toString();
 
-
-        if(!ValidateFacultyName() | !ValidateLeaveReason() | !ValidateStart() |!ValidateEnd()){
+        if (!ValidateFacultyName() || !ValidateLeaveReason() || !ValidateStart() || !ValidateEnd()) {
             return;
-        }else {
+        } else {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
-            leaveReqReference = database.getReference("leaveRequests");
 
-            String leaveReqId = leaveReqReference.push().getKey();
-            LeaveRequestForm help = new LeaveRequestForm(name, leaveType, reason, dateStart, dateEnd, "pending");
-            leaveReqReference.child(leaveReqId).setValue(help);
-            Toast.makeText(MainActivity4.this,"Leave Form successfully Submitted",Toast.LENGTH_SHORT).show();
-            Intent intent=new Intent(MainActivity4.this,MainActivity5.class);
+            DatabaseReference leaveReqReferenceAll = database.getReference("leaveRequests");
+            String leaveReqIdAll = leaveReqReferenceAll.push().getKey();
+            LeaveRequestForm helpAll = new LeaveRequestForm(name, leaveType, reason, dateStart, dateEnd, "pending", userUid);
+            leaveReqReferenceAll.child(leaveReqIdAll).setValue(helpAll);
+
+            DatabaseReference leaveReqReferenceUser = database.getReference("users").child(userUid).child("requests");
+            String leaveReqIdUser = leaveReqReferenceUser.push().getKey();
+            LeaveRequestForm helpUser = new LeaveRequestForm(name, leaveType, reason, dateStart, dateEnd, "pending", userUid);
+            leaveReqReferenceUser.child(leaveReqIdUser).setValue(helpUser);
+
+            Toast.makeText(MainActivity4.this, "Leave Form successfully Submitted", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity4.this, MainActivity5.class);
             startActivity(intent);
         }
     }
-
     private Boolean ValidateFacultyName(){
         String val=FacName.getEditText().getText().toString();
 
@@ -118,18 +130,6 @@ public class MainActivity4 extends AppCompatActivity {
             return true;
         }
     }
-    /*private Boolean ValidateLeaveType(){
-        String val=LeaveType.getEditText().getText().toString();
-
-        if (val.isEmpty()){
-            LeaveType.setError("Leave Type cannot be Empty");
-            return false;
-        }
-        else{
-            LeaveType.setError(null);
-            return true;
-        }
-    }*/
 
     private Boolean ValidateLeaveReason(){
         String val=LeaveReason.getEditText().getText().toString();
