@@ -68,6 +68,7 @@
                     android:fontFamily="sans-serif-condensed-medium"
                     android:textColor="@color/black"/>
                 <TextView
+                    android:id="@+id/dummy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Welcome to Faculty Leave Management Application. Start by applying request and wait for the result"

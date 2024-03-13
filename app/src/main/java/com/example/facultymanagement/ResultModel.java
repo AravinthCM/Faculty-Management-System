@@ -1,4 +1,3 @@
-// ResultModel.java
 package com.example.facultymanagement;
 
 public class ResultModel {
@@ -7,7 +6,6 @@ public class ResultModel {
     private long timestamp;
 
     public ResultModel() {
-        // Required empty public constructor
     }
 
     public ResultModel(String requestedFacultyName, String status, long timestamp) {

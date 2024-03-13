@@ -2,22 +2,20 @@ package com.example.facultymanagement;
 
 public class LeaveRequestForm {
 
-    String facname,leavetype,leavereason,startdate,enddate,status;
-    private String userUid;  // Add this field
-    private String leaveType;
-
+    String facname, leavetype, leavereason, startdate, enddate, status;
+    private String userUid;
 
     public LeaveRequestForm() {
     }
 
-    public LeaveRequestForm(String facname,String leavetype ,String leavereason, String startdate, String enddate, String status,String userUid) {
+    public LeaveRequestForm(String facname, String leavetype, String leavereason, String startdate, String enddate, String status, String userUid) {
         this.facname = facname;
         this.leavetype = leavetype;
         this.leavereason = leavereason;
         this.startdate = startdate;
         this.enddate = enddate;
-        this.status=status;
-        this.userUid=userUid;
+        this.status = status;
+        this.userUid = userUid;
     }
 
     public String getFacname() {
@@ -28,15 +26,14 @@ public class LeaveRequestForm {
         this.facname = facname;
     }
 
-
     public String getLeavetype() {
         return leavetype;
     }
 
-
     public void setLeavetype(String leavetype) {
         this.leavetype = leavetype;
     }
+
     public String getLeavereason() {
         return leavereason;
     }
@@ -60,6 +57,7 @@ public class LeaveRequestForm {
     public void setEnddate(String enddate) {
         this.enddate = enddate;
     }
+
     public String getStatus() {
         return status;
     }
@@ -68,20 +66,11 @@ public class LeaveRequestForm {
         this.status = status;
     }
 
-    public String getuserUid() {
+    public String getUserUid() {
         return userUid;
     }
 
-    public void setuserUid(String userUid) {
+    public void setUserUid(String userUid) {
         this.userUid = userUid;
     }
-
-    public String getLeaveType() {
-        return leaveType;
-    }
-
-    public void setLeaveType(String leaveType) {
-        this.leaveType = leaveType;
-    }
 }
-

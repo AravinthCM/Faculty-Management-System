@@ -35,14 +35,14 @@ public class MainActivity5 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main5);
 
-        Results=findViewById(R.id.Results);
+        Results = findViewById(R.id.Results);
         Results.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(MainActivity5.this, ResultsViewActivity.class);
+                Intent intent = new Intent(MainActivity5.this, ResultsViewActivity.class);
                 startActivity(intent);
             }
         });
@@ -51,9 +51,9 @@ public class MainActivity5 extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        String msg="Done";
-                        if(!task.isSuccessful()){
-                            msg="Failed";
+                        String msg = "Done";
+                        if (!task.isSuccessful()) {
+                            msg = "Failed";
                         }
                     }
 
@@ -61,12 +61,12 @@ public class MainActivity5 extends AppCompatActivity {
 
 
         drawerLayout = findViewById(R.id.drawerLayout);
-        materialToolbar=findViewById(R.id.materialToolbar);
-        frameLayout=findViewById(R.id.frameLayout);
-        navigationView=findViewById(R.id.navigationView);
+        materialToolbar = findViewById(R.id.materialToolbar);
+        frameLayout = findViewById(R.id.frameLayout);
+        navigationView = findViewById(R.id.navigationView);
 
-        ActionBarDrawerToggle toggle=new ActionBarDrawerToggle(
-                MainActivity5.this,drawerLayout,materialToolbar,R.string.drawer_close,R.string.drawer_open);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                MainActivity5.this, drawerLayout, materialToolbar, R.string.drawer_close, R.string.drawer_open);
         drawerLayout.addDrawerListener(toggle);
 
 
@@ -75,14 +75,23 @@ public class MainActivity5 extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(MainActivity5.this, MainActivity4.class);
+                Intent intent = new Intent(MainActivity5.this, MainActivity4.class);
                 startActivity(intent);
             }
         });
         abcde.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(MainActivity5.this, YourRequestsActivity.class);
+                Intent intent = new Intent(MainActivity5.this, YourRequestsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        TextView dummy=findViewById(R.id.dummy);
+        dummy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity5.this, ListsOfLeaveActivity.class);
                 startActivity(intent);
             }
         });
@@ -111,7 +120,7 @@ public class MainActivity5 extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
-                if (item.getItemId()==R.id.nav_admin){
+                if (item.getItemId() == R.id.nav_admin) {
                     startActivity(new Intent(MainActivity5.this, AdminLoginActivity.class));
                     return true;
                 }
@@ -122,7 +131,7 @@ public class MainActivity5 extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId()==R.id.nav_admin){
+                if (item.getItemId() == R.id.nav_admin) {
                     startActivity(new Intent(MainActivity5.this, AdminLoginActivity.class));
                     return true;
                 }
