@@ -9,6 +9,7 @@ import android.os.Bundle;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
@@ -25,28 +26,25 @@ public class TypesOfReqActivityActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Query to fetch users who have leave requests
-        Query query = FirebaseDatabase.getInstance().getReference().child("users").orderByChild("requests");
+        // Reference to the "leaveRequests" node in the database
+        DatabaseReference leaveRequestsRef = FirebaseDatabase.getInstance().getReference().child("leaveRequests");
 
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        // Query to fetch leave requests
+        leaveRequestsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // Iterate through each user node
-                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                    // Check if the user has leave requests
-                    if (userSnapshot.hasChild("requests")) {
-                        // If the user has leave requests, add them to the options
-                        FirebaseRecyclerOptions<MainModel> options =
-                                new FirebaseRecyclerOptions.Builder<MainModel>()
-                                        .setQuery(userSnapshot.child("requests").getRef(), MainModel.class)
-                                        .build();
+                // Check if there are any leave requests
+                if (dataSnapshot.exists()) {
+                    // If there are leave requests, create FirebaseRecyclerOptions
+                    FirebaseRecyclerOptions<MainModel> options =
+                            new FirebaseRecyclerOptions.Builder<MainModel>()
+                                    .setQuery(leaveRequestsRef, MainModel.class)
+                                    .build();
 
-                        // Initialize adapter with options
-                        mainAdapter = new MainAdapter(options, TypesOfReqActivityActivity.this);
-                        recyclerView.setAdapter(mainAdapter);
-                        mainAdapter.startListening();
-                        break; // Break the loop since we found a user with leave requests
-                    }
+                    // Initialize adapter with options
+                    mainAdapter = new MainAdapter(options, TypesOfReqActivityActivity.this);
+                    recyclerView.setAdapter(mainAdapter);
+                    mainAdapter.startListening();
                 }
             }
 

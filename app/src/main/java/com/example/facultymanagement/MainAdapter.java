@@ -16,7 +16,12 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
+import com.google.firebase.database.ValueEventListener;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 
@@ -93,26 +98,47 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MainModel, MainAdapter.
     private void updateStatus(int position, String newStatus) {
         MainModel model = getItem(position);
         if (model != null) {
-            String requestId = getRef(position).getKey(); // Get the leave request ID
-
+            String requestId = getRef(position).getKey();
             if (requestId != null) {
-                String userUid = model.getFacname(); // Get the user's unique ID
+                String userUid = model.getFacname();
 
-                // Update status in the existing leave request node under the user's ID
-                FirebaseDatabase.getInstance().getReference()
-                        .child("users").child(userUid).child(requestId).child("status").setValue(newStatus)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                Toast.makeText(context, "Leave request " + newStatus.toLowerCase() + ".", Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(context, "Error while updating.", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                // Get user name and requested faculty name
+                DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users").child(userUid);
+                userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            String userName = dataSnapshot.child("fullName").getValue(String.class);
+                            String requestedFacultyName = model.getFacname(); // Assuming this method exists in MainModel
+
+                            // Update status in the existing leave request node
+                            DatabaseReference resultsRef = FirebaseDatabase.getInstance().getReference().child("Results");
+                            resultsRef.orderByChild("requestId").equalTo(requestId).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                        // Update the existing node with the new status
+                                        snapshot.getRef().child("status").setValue(newStatus);
+                                        snapshot.getRef().child("timestamp").setValue(ServerValue.TIMESTAMP);
+                                        Toast.makeText(context, "Leave request " + newStatus.toLowerCase() + " and results updated.", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    Toast.makeText(context, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } else {
+                            Toast.makeText(context, "User not found.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(context, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         }
     }

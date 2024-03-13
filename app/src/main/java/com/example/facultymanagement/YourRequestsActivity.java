@@ -36,7 +36,7 @@ public class YourRequestsActivity extends AppCompatActivity {
             String currentUserEmail = currentUser.getEmail();
 
             DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
-            usersRef.orderByChild("email").equalTo(currentUserEmail).addListenerForSingleValueEvent(new ValueEventListener() {
+            usersRef.orderByChild("Email").equalTo(currentUserEmail).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     String currentUserId = null;

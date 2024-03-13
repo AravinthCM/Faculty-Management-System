@@ -121,6 +121,51 @@
                         android:textColor="@color/white"/>
 
                 </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="177.5dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/cardview2"
+                    android:orientation="vertical">
+
+
+                    <ImageView
+                        android:id="@+id/noteimg3"
+                        android:layout_marginStart="25dp"
+                        android:layout_marginTop="25dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_centerHorizontal="true"
+                        android:src="@drawable/past" />
+
+                    <TextView
+                        android:id="@+id/abcde3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="25dp"
+                        android:fontFamily="sans-serif-condensed-medium"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:text="Results"
+                        android:textColor="@color/bblack"
+                        android:textSize="38dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Click View Status to view the status of the leave request "
+                        android:layout_marginStart="25dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:fontFamily="sans-serif-condensed-medium"
+                        android:gravity="left"
+                        android:textColor="@color/bblack"/>
+
+                </LinearLayout>
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="177.5dp"

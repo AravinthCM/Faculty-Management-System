@@ -149,7 +149,7 @@ public class MainActivity4 extends AppCompatActivity {
                 String userEmail = currentUser.getEmail();
                 DatabaseReference usersRef = database.getReference("users");
 
-                Query query = usersRef.orderByChild("email").equalTo(userEmail);
+                Query query = usersRef.orderByChild("Email").equalTo(userEmail);
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -157,12 +157,17 @@ public class MainActivity4 extends AppCompatActivity {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 String userUid = snapshot.getKey();
 
-                                DatabaseReference currentUserRef = database.getReference("users").child(userUid);
-                                DatabaseReference leaveReqReferenceUser = currentUserRef.child("requests");
-                                String leaveReqIdUser = leaveReqReferenceUser.push().getKey();
 
+                                DatabaseReference leaveReqReferenceAll = database.getReference("leaveRequests");
+                                String leaveReqIdAll = leaveReqReferenceAll.push().getKey();
+                                LeaveRequestForm helpAll = new LeaveRequestForm(name, leaveType, reason, dateStart, dateEnd, "pending", userUid);
+                                leaveReqReferenceAll.child(leaveReqIdAll).setValue(helpAll);
+
+                                DatabaseReference leaveReqReferenceUser = database.getReference("users").child(userUid).child("requests");
+                                String leaveReqIdUser = leaveReqReferenceUser.push().getKey();
                                 LeaveRequestForm helpUser = new LeaveRequestForm(name, leaveType, reason, dateStart, dateEnd, "pending", userUid);
                                 leaveReqReferenceUser.child(leaveReqIdUser).setValue(helpUser);
+
 
                                 Toast.makeText(MainActivity4.this, "Leave Form successfully Submitted", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(MainActivity4.this, MainActivity5.class);
