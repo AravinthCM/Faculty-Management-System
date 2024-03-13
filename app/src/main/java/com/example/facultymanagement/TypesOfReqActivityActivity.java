@@ -41,7 +41,6 @@ public class TypesOfReqActivityActivity extends AppCompatActivity {
                                     .setQuery(leaveRequestsRef, MainModel.class)
                                     .build();
 
-                    // Initialize adapter with options
                     mainAdapter = new MainAdapter(options, TypesOfReqActivityActivity.this);
                     recyclerView.setAdapter(mainAdapter);
                     mainAdapter.startListening();

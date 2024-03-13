@@ -17,6 +17,15 @@
         android:theme="@style/Theme.Facultymanagement"
         tools:targetApi="31">
         <activity
+            android:name=".RetrieveApprovedRequests"
+            android:exported="false" />
+        <activity
+            android:name=".HrHomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ListsOfLeaveActivity"
+            android:exported="false" />
+        <activity
             android:name=".CasualLeaveActivity"
             android:exported="false" />
         <activity

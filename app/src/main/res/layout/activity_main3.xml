@@ -111,7 +111,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/bbblack"
-                android:text="Admin ?"
+                android:text="Hod Admin ?"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:textColor="@color/black"
+                android:textSize="18dp"/>
+
+            <Button
+                android:id="@+id/Hradmin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/bbblack"
+                android:text="HR Admin ?"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:textColor="@color/black"
                 android:textSize="18dp"/>

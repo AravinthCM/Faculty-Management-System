@@ -14,8 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,7 +36,7 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MainModel, MainAdapter.
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull myViewHolder holder,int position, @NonNull MainModel model) {
+    protected void onBindViewHolder(@NonNull myViewHolder holder, int position, @NonNull MainModel model) {
         holder.name.setText(model.getFacname());
         holder.type.setText(model.getLeavetype());
         holder.reason.setText(model.getLeavereason());
@@ -79,7 +77,7 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MainModel, MainAdapter.
                     public void onClick(View v) {
                         updateStatus(holder.getAdapterPosition(), "Approved");
                         dialogPlus.dismiss();
-                        Toast.makeText(context, "Leave request approved.", Toast.LENGTH_SHORT).show(); // Use context variable
+                        //   Toast.makeText(context, "Leave request approved.", Toast.LENGTH_SHORT).show(); // Use context variable
                     }
                 });
 
@@ -88,7 +86,7 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MainModel, MainAdapter.
                     public void onClick(View v) {
                         updateStatus(holder.getAdapterPosition(), "Declined");
                         dialogPlus.dismiss();
-                        Toast.makeText(context, "Leave request declined.", Toast.LENGTH_SHORT).show(); // Use context variable
+                        //   Toast.makeText(context, "Leave request declined.", Toast.LENGTH_SHORT).show(); // Use context variable
                     }
                 });
             }
@@ -100,49 +98,28 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MainModel, MainAdapter.
         if (model != null) {
             String requestId = getRef(position).getKey();
             if (requestId != null) {
-                String userUid = model.getFacname();
+                // Get the requested user UID
+                String requestedUserUid = model.getFacname();
 
-                // Get user name and requested faculty name
-                DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users").child(userUid);
-                userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()) {
-                            String userName = dataSnapshot.child("fullName").getValue(String.class);
-                            String requestedFacultyName = model.getFacname(); // Assuming this method exists in MainModel
+                // Update status and timestamp in the existing leave request node
+                DatabaseReference leaveRequestsRef = FirebaseDatabase.getInstance().getReference().child("leaveRequests").child(requestId);
+                leaveRequestsRef.child("status").setValue(newStatus);
+                leaveRequestsRef.child("timestamp").setValue(ServerValue.TIMESTAMP);
 
-                            // Update status in the existing leave request node
-                            DatabaseReference resultsRef = FirebaseDatabase.getInstance().getReference().child("Results");
-                            resultsRef.orderByChild("requestId").equalTo(requestId).addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                        // Update the existing node with the new status
-                                        snapshot.getRef().child("status").setValue(newStatus);
-                                        snapshot.getRef().child("timestamp").setValue(ServerValue.TIMESTAMP);
-                                        Toast.makeText(context, "Leave request " + newStatus.toLowerCase() + " and results updated.", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-                                    Toast.makeText(context, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        } else {
-                            Toast.makeText(context, "User not found.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Toast.makeText(context, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                // Create a new result node with the updated status and requested user UID
+                createNewResultNode(requestId, requestedUserUid, newStatus);
             }
         }
     }
 
+    private void createNewResultNode(String requestId, String requestedUserUid, String newStatus) {
+        // Store the result in the "Results" node
+        DatabaseReference resultsRef = FirebaseDatabase.getInstance().getReference().child("Results").child(requestId);
+        resultsRef.child("requestId").setValue(requestId);
+        resultsRef.child("requestedUserUid").setValue(requestedUserUid);
+        resultsRef.child("status").setValue(newStatus);
+        resultsRef.child("timestamp").setValue(ServerValue.TIMESTAMP);
+    }
 
     @NonNull
     @Override

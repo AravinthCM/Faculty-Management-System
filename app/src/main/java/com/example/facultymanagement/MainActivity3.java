@@ -49,6 +49,17 @@ public class MainActivity3 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
 
+        TextView Hradmin;
+        Hradmin=findViewById(R.id.Hradmin);
+        Hradmin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(MainActivity3.this, HrHomeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
         progressBar=findViewById(R.id.progress1);
 
         Button imageButton = findViewById(R.id.already);
