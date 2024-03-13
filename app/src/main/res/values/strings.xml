@@ -12,10 +12,11 @@
     </string-array>
 
     <string-array name="leave_types">
-        <item>Personal Leave</item>
-        <item>Sick Leave</item>
-        <item>Maternity Leave</item>
-        <item>LOP</item>
-        <!-- Add more leave types as needed -->
+        <item>CASUAL LEAVE</item>
+        <item>EARNED LEAVE</item>
+        <item>MEDICAL LEAVE</item>
+        <item>ON DUTY</item>
+        <item>SPECIAL ON DUTY</item>
+        <item>VEL</item>
     </string-array>
 </resources>

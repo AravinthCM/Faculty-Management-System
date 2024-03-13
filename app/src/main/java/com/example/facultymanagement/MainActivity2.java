@@ -18,11 +18,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity2 extends AppCompatActivity {
-
-
     TextInputLayout regName, regEmail, regPhoneno, regPassword;
     Button regBtn, regTologin;
-
     FirebaseDatabase rootnode;
     DatabaseReference reference;
 

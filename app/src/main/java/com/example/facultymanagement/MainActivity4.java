@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
@@ -141,69 +142,48 @@ public class MainActivity4 extends AppCompatActivity {
         if (!validateFacultyName() || !validateLeaveReason() || !validateStart() || !validateEnd()) {
             return;
         } else {
-            // Deduct leave days from the respective category
-            deductLeaveDays(leaveType, dateStart, dateEnd);
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            FirebaseUser currentUser = mAuth.getCurrentUser();
 
-            // Update Firebase Database
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            if (currentUser != null) {
+                String userEmail = currentUser.getEmail();
+                DatabaseReference usersRef = database.getReference("users");
 
-            DatabaseReference leaveReqReferenceAll = database.getReference("leaveRequests");
-            String leaveReqIdAll = leaveReqReferenceAll.push().getKey();
-            LeaveRequestForm helpAll = new LeaveRequestForm(name, leaveType, reason, dateStart, dateEnd, "pending", userUid);
-            leaveReqReferenceAll.child(leaveReqIdAll).setValue(helpAll);
+                Query query = usersRef.orderByChild("email").equalTo(userEmail);
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                String userUid = snapshot.getKey();
 
-            DatabaseReference leaveReqReferenceUser = database.getReference("users").child(userUid).child("requests");
-            String leaveReqIdUser = leaveReqReferenceUser.push().getKey();
-            LeaveRequestForm helpUser = new LeaveRequestForm(name, leaveType, reason, dateStart, dateEnd, "pending", userUid);
-            leaveReqReferenceUser.child(leaveReqIdUser).setValue(helpUser);
+                                DatabaseReference currentUserRef = database.getReference("users").child(userUid);
+                                DatabaseReference leaveReqReferenceUser = currentUserRef.child("requests");
+                                String leaveReqIdUser = leaveReqReferenceUser.push().getKey();
 
-            Toast.makeText(MainActivity4.this, "Leave Form successfully Submitted", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(MainActivity4.this, MainActivity5.class);
-            startActivity(intent);
-        }
-    }
+                                LeaveRequestForm helpUser = new LeaveRequestForm(name, leaveType, reason, dateStart, dateEnd, "pending", userUid);
+                                leaveReqReferenceUser.child(leaveReqIdUser).setValue(helpUser);
 
-    private void deductLeaveDays(String leaveType, String dateStart, String dateEnd) {
-        // Retrieve the user's leave days data from the Firebase Database
-        DatabaseReference leaveDaysReference = database.getReference("users").child(userUid).child("leaveDays");
-        leaveDaysReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    // Get the current leave days for the specified leave type
-                    int currentLeaveDays = dataSnapshot.child(leaveType).getValue(Integer.class);
+                                Toast.makeText(MainActivity4.this, "Leave Form successfully Submitted", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(MainActivity4.this, MainActivity5.class);
+                                startActivity(intent);
+                                return;
+                            }
+                        } else {
+                            Toast.makeText(MainActivity4.this, "User not found in the database", Toast.LENGTH_SHORT).show();
+                        }
+                    }
 
-                    // Calculate the number of days between start and end dates
-                    long daysDifference = calculateDaysDifference(dateStart, dateEnd);
-
-                    // Deduct the leave days
-                    currentLeaveDays -= daysDifference;
-
-                    // Update the leave days in the database
-                    leaveDaysReference.child(leaveType).setValue(currentLeaveDays);
-                }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        // Handle database error
+                        Toast.makeText(MainActivity4.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                Toast.makeText(MainActivity4.this, "User not logged in", Toast.LENGTH_SHORT).show();
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle errors if needed
-            }
-        });
-    }
-
-    private long calculateDaysDifference(String dateStart, String dateEnd) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        try {
-            Date startDate = sdf.parse(dateStart);
-            Date endDate = sdf.parse(dateEnd);
-
-            // Calculate the difference in days
-            long diff = endDate.getTime() - startDate.getTime();
-            return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) + 1; // Include the end date
-        } catch (ParseException e) {
-            e.printStackTrace();
         }
-        return 0;
     }
 
     private boolean validateFacultyName() {
@@ -243,10 +223,14 @@ public class MainActivity4 extends AppCompatActivity {
     }
 
     private boolean validateEnd() {
-        String val = EndDate.getEditText().getText().toString();
+        String valStart = StartDate.getEditText().getText().toString();
+        String valEnd = EndDate.getEditText().getText().toString();
 
-        if (val.isEmpty()) {
+        if (valEnd.isEmpty()) {
             EndDate.setError("End Date cannot be Empty");
+            return false;
+        } else if (valStart.equals(valEnd)) {
+            EndDate.setError("End Date cannot be the same as Start Date");
             return false;
         } else {
             EndDate.setError(null);

@@ -1,7 +1,6 @@
 package com.example.facultymanagement;
 
 public class MainModel {
-
     String facname,leavetype,leavereason,startdate,enddate,status;
     public MainModel() {
 
