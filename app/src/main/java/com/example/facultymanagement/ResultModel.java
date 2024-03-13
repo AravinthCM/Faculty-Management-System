@@ -1,21 +1,21 @@
 package com.example.facultymanagement;
 
 public class ResultModel {
-    private String requestedFacultyName;
+    private String requestedUserUid;
     private String status;
     private long timestamp;
 
     public ResultModel() {
     }
 
-    public ResultModel(String requestedFacultyName, String status, long timestamp) {
-        this.requestedFacultyName = requestedFacultyName;
+    public ResultModel(String requestedUserUid, String status, long timestamp) {
+        this.requestedUserUid = requestedUserUid;
         this.status = status;
         this.timestamp = timestamp;
     }
 
-    public String getRequestedFacultyName() {
-        return requestedFacultyName;
+    public String getRequestedUserUid() {
+        return requestedUserUid;
     }
 
     public String getStatus() {

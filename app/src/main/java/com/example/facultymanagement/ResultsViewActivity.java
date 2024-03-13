@@ -84,12 +84,13 @@ public class ResultsViewActivity extends AppCompatActivity {
         }
 
         public void bind(ResultModel model) {
-            txtRequestedFacultyName.setText("Requested Faculty Name: " + model.getRequestedFacultyName());
+            txtRequestedFacultyName.setText("Requested Faculty Name: " + model.getRequestedUserUid());
             txtStatus.setText("Status: " + model.getStatus());
             long timestamp = model.getTimestamp();
             CharSequence approvedTime = DateFormat.format("MM/dd/yyyy HH:mm:ss", new Date(timestamp));
             txtApprovedTime.setText("Time of action: " + approvedTime);
         }
+
     }
 
 
