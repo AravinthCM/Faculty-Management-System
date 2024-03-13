@@ -162,50 +162,17 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="sans-serif-condensed-medium"
-                        android:text="Phone Number"
+                        android:text="User Id"
                         android:textColor="@color/black"
                         android:textSize="15dp" />
 
                     <TextView
-                        android:id="@+id/profilePhoneNo"
+                        android:id="@+id/profileUid"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="sans-serif-condensed-medium"
-                        android:text="Phone number"
-                        android:textAlignment="viewEnd"
-                        android:textColor="@color/bblack"
-                        android:textSize="10dp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
-
-                    <TextView
-                        android:id="@+id/password"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="sans-serif-condensed-medium"
-                        android:text="Password"
-                        android:textColor="@color/black"
-                        android:textSize="15dp" />
-
-                    <TextView
-                        android:id="@+id/profilePassword"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="sans-serif-condensed-medium"
-                        android:text="Password"
+                        android:text="Uid"
                         android:textAlignment="viewEnd"
                         android:textColor="@color/bblack"
                         android:textSize="10dp" />
@@ -254,7 +221,7 @@
                     android:padding="8dp">
 
                     <TextView
-                        android:id="@+id/name4"
+                        android:id="@+id/castag"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -264,12 +231,12 @@
                         android:textSize="15dp" />
 
                     <TextView
-                        android:id="@+id/profileName4"
+                        android:id="@+id/cas"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="sans-serif-condensed-medium"
-                        android:text="12"
+                        android:text="no"
                         android:textAlignment="viewEnd"
                         android:textColor="@color/bblack"
                         android:textSize="15dp" />
@@ -288,7 +255,7 @@
                     android:padding="8dp">
 
                     <TextView
-                        android:id="@+id/email4"
+                        android:id="@+id/earntag"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -298,12 +265,12 @@
                         android:textSize="15dp" />
 
                     <TextView
-                        android:id="@+id/profileEmail44"
+                        android:id="@+id/earn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="sans-serif-condensed-medium"
-                        android:text="3"
+                        android:text="no"
                         android:textAlignment="viewEnd"
                         android:textColor="@color/bblack"
                         android:textSize="15dp" />
@@ -321,7 +288,7 @@
                     android:padding="8dp">
 
                     <TextView
-                        android:id="@+id/phoneNo4"
+                        android:id="@+id/medi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -331,12 +298,12 @@
                         android:textSize="15dp" />
 
                     <TextView
-                        android:id="@+id/profilePhoneNo4"
+                        android:id="@+id/medic"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="sans-serif-condensed-medium"
-                        android:text="6"
+                        android:text="no"
                         android:textAlignment="viewEnd"
                         android:textColor="@color/bblack"
                         android:textSize="15dp" />
@@ -364,12 +331,12 @@
                         android:textSize="15dp" />
 
                     <TextView
-                        android:id="@+id/profilePassword4"
+                        android:id="@+id/vel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="sans-serif-condensed-medium"
-                        android:text="2"
+                        android:text="no"
                         android:textAlignment="viewEnd"
                         android:textColor="@color/bblack"
                         android:textSize="15dp" />
@@ -425,18 +392,18 @@
                         android:fontFamily="sans-serif-condensed-medium"
                         android:text="On-Duty"
                         android:textColor="@color/black"
-                        android:textSize="15dp" />
+                        android:textSize="15sp" />
 
                     <TextView
-                        android:id="@+id/profileName4"
+                        android:id="@+id/onduty"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="sans-serif-condensed-medium"
-                        android:text="14"
+                        android:text="no"
                         android:textAlignment="viewEnd"
                         android:textColor="@color/bblack"
-                        android:textSize="15dp" />
+                        android:textSize="15sp" />
 
                 </LinearLayout>
 
@@ -459,18 +426,18 @@
                         android:fontFamily="sans-serif-condensed-medium"
                         android:text="Special On-Duty"
                         android:textColor="@color/black"
-                        android:textSize="15dp" />
+                        android:textSize="15sp" />
 
                     <TextView
-                        android:id="@+id/profileEmail2"
+                        android:id="@+id/specialonduty"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="sans-serif-condensed-medium"
-                        android:text="5"
+                        android:text="no"
                         android:textAlignment="viewEnd"
                         android:textColor="@color/bblack"
-                        android:textSize="15dp" />
+                        android:textSize="15sp" />
 
                 </LinearLayout>
 

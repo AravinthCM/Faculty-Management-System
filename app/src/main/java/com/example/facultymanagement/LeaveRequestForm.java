@@ -4,6 +4,7 @@ public class LeaveRequestForm {
 
     String facname,leavetype,leavereason,startdate,enddate,status;
     private String userUid;  // Add this field
+    private String leaveType;
 
 
     public LeaveRequestForm() {
@@ -74,11 +75,13 @@ public class LeaveRequestForm {
     public void setuserUid(String userUid) {
         this.userUid = userUid;
     }
+
+    public String getLeaveType() {
+        return leaveType;
+    }
+
+    public void setLeaveType(String leaveType) {
+        this.leaveType = leaveType;
+    }
 }
 
-/*
-
-
-
-
-*/

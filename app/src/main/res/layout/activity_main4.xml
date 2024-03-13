@@ -292,9 +292,7 @@
                 android:background="@color/bbblack">
 
             </LinearLayout>
-
         </LinearLayout>
-
     </ScrollView>
 
 </LinearLayout>

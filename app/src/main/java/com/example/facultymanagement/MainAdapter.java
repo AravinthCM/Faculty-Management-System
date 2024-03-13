@@ -77,7 +77,6 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MainModel, MainAdapter.
                     public void onClick(View v) {
                         updateStatus(holder.getAdapterPosition(), "Approved");
                         dialogPlus.dismiss();
-                        //   Toast.makeText(context, "Leave request approved.", Toast.LENGTH_SHORT).show(); // Use context variable
                     }
                 });
 
@@ -86,7 +85,6 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MainModel, MainAdapter.
                     public void onClick(View v) {
                         updateStatus(holder.getAdapterPosition(), "Declined");
                         dialogPlus.dismiss();
-                        //   Toast.makeText(context, "Leave request declined.", Toast.LENGTH_SHORT).show(); // Use context variable
                     }
                 });
             }
@@ -98,22 +96,18 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MainModel, MainAdapter.
         if (model != null) {
             String requestId = getRef(position).getKey();
             if (requestId != null) {
-                // Get the requested user UID
                 String requestedUserUid = model.getFacname();
 
-                // Update status and timestamp in the existing leave request node
                 DatabaseReference leaveRequestsRef = FirebaseDatabase.getInstance().getReference().child("leaveRequests").child(requestId);
                 leaveRequestsRef.child("status").setValue(newStatus);
                 leaveRequestsRef.child("timestamp").setValue(ServerValue.TIMESTAMP);
 
-                // Create a new result node with the updated status and requested user UID
                 createNewResultNode(requestId, requestedUserUid, newStatus);
             }
         }
     }
 
     private void createNewResultNode(String requestId, String requestedUserUid, String newStatus) {
-        // Store the result in the "Results" node
         DatabaseReference resultsRef = FirebaseDatabase.getInstance().getReference().child("Results").child(requestId);
         resultsRef.child("requestId").setValue(requestId);
         resultsRef.child("requestedUserUid").setValue(requestedUserUid);

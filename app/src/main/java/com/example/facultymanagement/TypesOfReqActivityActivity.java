@@ -17,25 +17,18 @@ import com.google.firebase.database.ValueEventListener;
 public class TypesOfReqActivityActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     MainAdapter mainAdapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.types_of_req_activity);
-
         recyclerView = findViewById(R.id.rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Reference to the "leaveRequests" node in the database
         DatabaseReference leaveRequestsRef = FirebaseDatabase.getInstance().getReference().child("leaveRequests");
-
-        // Query to fetch leave requests
         leaveRequestsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // Check if there are any leave requests
                 if (dataSnapshot.exists()) {
-                    // If there are leave requests, create FirebaseRecyclerOptions
                     FirebaseRecyclerOptions<MainModel> options =
                             new FirebaseRecyclerOptions.Builder<MainModel>()
                                     .setQuery(leaveRequestsRef, MainModel.class)
@@ -46,10 +39,8 @@ public class TypesOfReqActivityActivity extends AppCompatActivity {
                     mainAdapter.startListening();
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // Handle error
             }
         });
     }

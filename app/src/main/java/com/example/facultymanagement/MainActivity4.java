@@ -47,10 +47,41 @@ public class MainActivity4 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main4);
 
+        database = FirebaseDatabase.getInstance();
         FacName = findViewById(R.id.fullname);
         LeaveReason = findViewById(R.id.phone);
         StartDate = findViewById(R.id.start);
         EndDate = findViewById(R.id.end);
+
+        FirebaseAuth mAuth3 = FirebaseAuth.getInstance();
+        FirebaseUser currentUser3 = mAuth3.getCurrentUser();
+
+        if (currentUser3 != null) {
+            String userEmail = currentUser3.getEmail();
+            DatabaseReference usersRef = database.getReference("users");
+
+            Query query = usersRef.orderByChild("Email").equalTo(userEmail);
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            String facultyName = snapshot.child("Professor Name").getValue(String.class);
+                            FacName.getEditText().setText(facultyName);
+                        }
+                    } else {
+                        Toast.makeText(MainActivity4.this, "User not found in the database", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText(MainActivity4.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Toast.makeText(MainActivity4.this, "User not logged in", Toast.LENGTH_SHORT).show();
+        }
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -68,7 +99,6 @@ public class MainActivity4 extends AppCompatActivity {
         }
 
         database = FirebaseDatabase.getInstance();
-
         ImageView btnStartDate = findViewById(R.id.btnStartDate);
         ImageView btnEndDate = findViewById(R.id.btnEndDate);
 
@@ -168,7 +198,6 @@ public class MainActivity4 extends AppCompatActivity {
                                 LeaveRequestForm helpUser = new LeaveRequestForm(name, leaveType, reason, dateStart, dateEnd, "pending", userUid);
                                 leaveReqReferenceUser.child(leaveReqIdUser).setValue(helpUser);
 
-
                                 Toast.makeText(MainActivity4.this, "Leave Form successfully Submitted", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(MainActivity4.this, MainActivity5.class);
                                 startActivity(intent);
@@ -181,7 +210,6 @@ public class MainActivity4 extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-                        // Handle database error
                         Toast.makeText(MainActivity4.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
