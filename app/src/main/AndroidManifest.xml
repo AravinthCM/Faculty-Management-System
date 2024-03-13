@@ -17,6 +17,18 @@
         android:theme="@style/Theme.Facultymanagement"
         tools:targetApi="31">
         <activity
+            android:name=".PriorPermission"
+            android:exported="false" />
+        <activity
+            android:name=".OnDutyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MedicalLeave"
+            android:exported="false" />
+        <activity
+            android:name=".EarnedLeave"
+            android:exported="false" />
+        <activity
             android:name=".RetrieveApprovedRequests"
             android:exported="false" />
         <activity

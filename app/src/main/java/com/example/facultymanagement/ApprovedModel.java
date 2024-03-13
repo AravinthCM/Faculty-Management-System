@@ -1,17 +1,25 @@
 package com.example.facultymanagement;
 
+import java.util.Date;
+
 public class ApprovedModel {
     private String requestId;
-    private String requestedFacultyName;
+    private String requestedUserUid;
+    private String leaveType; // New field
+    private Date startDate; // New field
+    private Date endDate; // New field
     private long timestamp;
 
     public ApprovedModel() {
         // Required empty public constructor
     }
 
-    public ApprovedModel(String requestId, String requestedFacultyName, long timestamp) {
+    public ApprovedModel(String requestId, String requestedUserUid, String leaveType, Date startDate, Date endDate, long timestamp) {
         this.requestId = requestId;
-        this.requestedFacultyName = requestedFacultyName;
+        this.requestedUserUid = requestedUserUid;
+        this.leaveType = leaveType;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.timestamp = timestamp;
     }
 
@@ -19,12 +27,23 @@ public class ApprovedModel {
         return requestId;
     }
 
-    public String getRequestedFacultyName() {
-        return requestedFacultyName;
+    public String getRequestedUserUid() {
+        return requestedUserUid;
+    }
+
+    public String getLeaveType() {
+        return leaveType;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
     }
 
     public long getTimestamp() {
         return timestamp;
     }
 }
-

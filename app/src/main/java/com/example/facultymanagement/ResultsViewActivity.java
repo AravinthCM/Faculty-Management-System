@@ -90,8 +90,5 @@ public class ResultsViewActivity extends AppCompatActivity {
             CharSequence approvedTime = DateFormat.format("MM/dd/yyyy HH:mm:ss", new Date(timestamp));
             txtApprovedTime.setText("Time of action: " + approvedTime);
         }
-
     }
-
-
 }

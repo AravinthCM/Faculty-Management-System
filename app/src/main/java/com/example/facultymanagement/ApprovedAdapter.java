@@ -32,13 +32,22 @@ public class ApprovedAdapter extends RecyclerView.Adapter<ApprovedAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ApprovedModel model = approvedList.get(position);
         holder.txtRequestId.setText("Request ID: " + model.getRequestId());
-        holder.txtRequestedFacultyName.setText("Requested Faculty Name: " + model.getRequestedFacultyName());
-
-        // Convert timestamp to formatted date string
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
-        String formattedDate = sdf.format(new Date(model.getTimestamp()));
-        holder.txtTimestamp.setText("Timestamp: " + formattedDate);
+        holder.txtRequestedFacultyName.setText("Requested Faculty Name: " + model.getRequestedUserUid());
+        holder.txtLeaveType.setText("Leave Type: " + model.getLeaveType());
+        holder.txtStartDate.setText("Start Date: " + formatDate(model.getStartDate()));
+        holder.txtEndDate.setText("End Date: " + formatDate(model.getEndDate()));
+        holder.txtTimestamp.setText("Timestamp: " + formatDate(new Date(model.getTimestamp())));
     }
+
+    private String formatDate(Date date) {
+        if (date != null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            return sdf.format(date);
+        } else {
+            return "N/A"; // Or any other appropriate value for null dates
+        }
+    }
+
 
     @Override
     public int getItemCount() {
@@ -46,12 +55,15 @@ public class ApprovedAdapter extends RecyclerView.Adapter<ApprovedAdapter.ViewHo
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtRequestId, txtRequestedFacultyName, txtTimestamp;
+        TextView txtRequestId, txtRequestedFacultyName, txtLeaveType, txtStartDate, txtEndDate, txtTimestamp;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtRequestId = itemView.findViewById(R.id.txtRequestId);
             txtRequestedFacultyName = itemView.findViewById(R.id.txtRequestedFacultyName);
+            txtLeaveType = itemView.findViewById(R.id.txtLeaveType);
+            txtStartDate = itemView.findViewById(R.id.txtStartDate);
+            txtEndDate = itemView.findViewById(R.id.txtEndDate);
             txtTimestamp = itemView.findViewById(R.id.txtTimestamp);
         }
     }

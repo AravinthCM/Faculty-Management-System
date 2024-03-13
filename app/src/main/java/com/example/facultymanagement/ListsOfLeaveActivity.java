@@ -9,7 +9,7 @@ import android.view.View;
 
 public class ListsOfLeaveActivity extends AppCompatActivity {
 
-    CardView CASUAL;
+    CardView CASUAL,MEDICAL,cardViewEARNEDLeave,onduty,prior;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +20,42 @@ public class ListsOfLeaveActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(ListsOfLeaveActivity.this, CasualLeaveActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        MEDICAL=findViewById(R.id.MEDICAL);
+        MEDICAL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(ListsOfLeaveActivity.this, MedicalLeave.class);
+                startActivity(intent);
+            }
+        });
+
+        cardViewEARNEDLeave=findViewById(R.id.cardViewEARNEDLeave);
+        cardViewEARNEDLeave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(ListsOfLeaveActivity.this, EarnedLeave.class);
+                startActivity(intent);
+            }
+        });
+
+        onduty=findViewById(R.id.onduty);
+        onduty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(ListsOfLeaveActivity.this, OnDutyActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        prior=findViewById(R.id.prior);
+        prior.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(ListsOfLeaveActivity.this, PriorPermission.class);
                 startActivity(intent);
             }
         });
