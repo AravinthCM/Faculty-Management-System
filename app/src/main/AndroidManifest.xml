@@ -17,6 +17,9 @@
         android:theme="@style/Theme.Facultymanagement"
         tools:targetApi="31">
         <activity
+            android:name=".CasualLeaveActivity"
+            android:exported="false" />
+        <activity
             android:name=".ResultsViewActivity"
             android:exported="false" />
         <activity

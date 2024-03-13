@@ -2,7 +2,6 @@
 package com.example.facultymanagement;
 
 public class ResultModel {
-    private String requestId;
     private String requestedFacultyName;
     private String status;
     private long timestamp;
@@ -11,15 +10,10 @@ public class ResultModel {
         // Required empty public constructor
     }
 
-    public ResultModel(String requestId, String requestedFacultyName, String status, long timestamp) {
-        this.requestId = requestId;
+    public ResultModel(String requestedFacultyName, String status, long timestamp) {
         this.requestedFacultyName = requestedFacultyName;
         this.status = status;
         this.timestamp = timestamp;
-    }
-
-    public String getRequestId() {
-        return requestId;
     }
 
     public String getRequestedFacultyName() {

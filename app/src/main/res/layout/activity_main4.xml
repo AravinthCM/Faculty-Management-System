@@ -55,197 +55,245 @@
         android:layout_height="match_parent">
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="30dp"
-        android:background="@color/bbblack"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_marginTop="0dp"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Leave Form"
-            android:textColor="@color/black"
-            android:fontFamily="sans-serif-condensed-medium"
-            android:textSize="25sp"/>
+            android:layout_height="match_parent"
+            android:padding="30dp"
+            android:background="@color/bbblack"
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="Faculty Name: "
-            android:textSize="20sp"/>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:id="@+id/fullname"
-            android:hint=""
-            android:textColorHint="@color/black"
-            style="@style/Animation.Design.BottomSheetDialog"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.textfield.TextInputEditText
+            <TextView
+                android:layout_marginTop="0dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:inputType="text"/>
+                android:text="Leave Form"
+                android:textColor="@color/black"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:textSize="25sp"/>
 
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <Spinner
-            android:id="@+id/spinnerLeaveType"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@android:drawable/btn_dropdown"
-            android:padding="10dp"
-            android:textColor="@color/black"/>
-
-        <TextView
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Leave Reason:"
-            android:textColor="@color/black"
-            android:textSize="20sp"/>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/phone"
-            android:hint=""
-            android:textColorHint="@color/black"
-            android:textColor="@color/bblack"
-            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox">
-
-            <com.google.android.material.textfield.TextInputEditText
+            <TextView
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:textColor="@color/white"
-                android:inputType="text"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Start Date:"
-            android:textColor="@color/black"
-            android:textSize="20sp"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="Faculty Name: "
+                android:textSize="20sp"/>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="250dp"
-                android:id="@+id/start"
+                android:layout_width="match_parent"
+                android:id="@+id/fullname"
                 android:hint=""
                 android:textColorHint="@color/black"
-                style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+                style="@style/Animation.Design.BottomSheetDialog"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="250dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:inputType="none"
-                    android:focusable="false"
-                    android:cursorVisible="false"
-                    android:clickable="true"
-                    android:longClickable="false"
-                    android:focusableInTouchMode="false"/>
+                    android:inputType="text"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <ImageView
-                android:id="@+id/btnStartDate"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:textColor="@color/white"
-                android:layout_marginStart="10dp"
-                android:layout_gravity="center"
-                android:src="@drawable/clock"/>
+            <Spinner
+                android:id="@+id/spinnerLeaveType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@android:drawable/btn_dropdown"
+                android:padding="10dp"
+                android:textColor="@color/black"/>
 
-        </LinearLayout>
-
-        <TextView
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="End Date:"
-            android:textColor="@color/black"
-            android:textSize="20sp"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Leave Reason:"
+                android:textColor="@color/black"
+                android:textSize="20sp"/>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="wrap_content"
-                android:id="@+id/end"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/phone"
                 android:hint=""
                 android:textColorHint="@color/black"
-                style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+                android:textColor="@color/bblack"
+                style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:textColor="@color/white"
+                    android:inputType="text"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="Substitution Staff: "
+                android:textSize="20sp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:id="@+id/Substitutionstaff"
+                android:hint=""
+                android:textColorHint="@color/black"
+                style="@style/Animation.Design.BottomSheetDialog"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="250dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:inputType="none"
-                    android:focusable="false"
-                    android:cursorVisible="false"
-                    android:clickable="true"
-                    android:longClickable="false"
-                    android:focusableInTouchMode="false"/>
+                    android:inputType="text"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <ImageView
-                android:id="@+id/btnEndDate"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:textColor="@color/white"
-                android:layout_marginStart="10dp"
-                android:layout_gravity="center"
-                android:src="@drawable/clock"/>
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="Subject and Class Hour: "
+                android:textSize="20sp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:id="@+id/subclasshour"
+                android:hint=""
+                android:textColorHint="@color/black"
+                style="@style/Animation.Design.BottomSheetDialog"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:inputType="text"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Start Date:"
+                android:textColor="@color/black"
+                android:textSize="20sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="250dp"
+                    android:id="@+id/start"
+                    android:hint=""
+                    android:textColorHint="@color/black"
+                    style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:inputType="none"
+                        android:focusable="false"
+                        android:cursorVisible="false"
+                        android:clickable="true"
+                        android:longClickable="false"
+                        android:focusableInTouchMode="false"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:id="@+id/btnStartDate"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:textColor="@color/white"
+                    android:layout_marginStart="10dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/clock"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="End Date:"
+                android:textColor="@color/black"
+                android:textSize="20sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:id="@+id/end"
+                    android:hint=""
+                    android:textColorHint="@color/black"
+                    style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:inputType="none"
+                        android:focusable="false"
+                        android:cursorVisible="false"
+                        android:clickable="true"
+                        android:longClickable="false"
+                        android:focusableInTouchMode="false"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:id="@+id/btnEndDate"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:textColor="@color/white"
+                    android:layout_marginStart="10dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/clock"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/reqsub"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/bbblack"
+                android:text="@string/submit_request"
+                android:textColor="@color/black"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Note: The request will be submitted and result can be seen in home screen"
+                android:textColor="@color/black"
+                android:textSize="15sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@color/bbblack">
+
+            </LinearLayout>
 
         </LinearLayout>
-
-        <Button
-            android:id="@+id/reqsub"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="@color/bbblack"
-            android:text="@string/submit_request"
-            android:textColor="@color/black"
-            android:textSize="20sp"/>
-
-        <TextView
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Note: The request will be submitted and result can be seen in home screen"
-            android:textColor="@color/black"
-            android:textSize="15sp"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:background="@color/bbblack">
-
-        </LinearLayout>
-
-    </LinearLayout>
 
     </ScrollView>
 

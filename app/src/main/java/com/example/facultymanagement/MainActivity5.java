@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,7 +29,7 @@ public class MainActivity5 extends AppCompatActivity {
     DrawerLayout drawerLayout;
     MaterialToolbar materialToolbar;
     FrameLayout frameLayout;
-
+    LinearLayout Results;
     NavigationView navigationView;
 
     @Override
@@ -37,6 +38,14 @@ public class MainActivity5 extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main5);
 
+        Results=findViewById(R.id.Results);
+        Results.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(MainActivity5.this, ResultsViewActivity.class);
+                startActivity(intent);
+            }
+        });
 
         FirebaseMessaging.getInstance().subscribeToTopic("Test")
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
