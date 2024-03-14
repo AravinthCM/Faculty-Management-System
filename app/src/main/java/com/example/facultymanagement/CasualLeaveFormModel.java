@@ -1,22 +1,24 @@
 package com.example.facultymanagement;
 
-public class MainModel {
-    String facname, leavetype, leavereason, startdate, enddate, status, subjectclasshour, submissiondate, substitutionstaff;
+public class CasualLeaveFormModel {
 
-    public MainModel() {
+    private String facname, leavetype, leavereason, startdate, enddate, substitutionstaff, subjectclasshour, status, submissiondate;
+    private String userUid;
 
+    public CasualLeaveFormModel() {
     }
 
-    public MainModel(String facname, String leavetype, String leavereason, String startdate, String enddate, String status, String subjectclasshour, String submissiondate, String substitutionstaff) {
+    public CasualLeaveFormModel(String facname, String leavetype, String leavereason, String startdate, String enddate, String substitutionstaff, String subjectclasshour, String status, String submissiondate, String userUid) {
         this.facname = facname;
         this.leavetype = leavetype;
         this.leavereason = leavereason;
         this.startdate = startdate;
         this.enddate = enddate;
-        this.status = status;
-        this.subjectclasshour = subjectclasshour;
-        this.submissiondate = submissiondate;
         this.substitutionstaff = substitutionstaff;
+        this.subjectclasshour = subjectclasshour;
+        this.status = status;
+        this.submissiondate = submissiondate;
+        this.userUid = userUid;
     }
 
     public String getFacname() {
@@ -59,12 +61,12 @@ public class MainModel {
         this.enddate = enddate;
     }
 
-    public String getStatus() {
-        return status;
+    public String getSubstitutionstaff() {
+        return substitutionstaff;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setSubstitutionstaff(String substitutionstaff) {
+        this.substitutionstaff = substitutionstaff;
     }
 
     public String getSubjectclasshour() {
@@ -75,6 +77,14 @@ public class MainModel {
         this.subjectclasshour = subjectclasshour;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public String getSubmissiondate() {
         return submissiondate;
     }
@@ -83,11 +93,11 @@ public class MainModel {
         this.submissiondate = submissiondate;
     }
 
-    public String getSubstitutionstaff() {
-        return substitutionstaff;
+    public String getUserUid() {
+        return userUid;
     }
 
-    public void setSubstitutionstaff(String substitutionstaff) {
-        this.substitutionstaff = substitutionstaff;
+    public void setUserUid(String userUid) {
+        this.userUid = userUid;
     }
 }

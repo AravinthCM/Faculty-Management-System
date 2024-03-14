@@ -1,4 +1,6 @@
+// RetrieveApprovedRequests.java
 package com.example.facultymanagement;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,7 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RetrieveApprovedRequests extends AppCompatActivity {
+public class RetrieveApprovedRequests extends AppCompatActivity implements ApprovedAdapter.OnStatusUpdateListener {
 
     private RecyclerView recyclerView;
     private ApprovedAdapter adapter;
@@ -30,14 +32,14 @@ public class RetrieveApprovedRequests extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         approvedList = new ArrayList<>();
-        adapter = new ApprovedAdapter(approvedList);
+        adapter = new ApprovedAdapter(approvedList, this);
         recyclerView.setAdapter(adapter);
 
         retrieveApprovedRequests();
     }
 
     private void retrieveApprovedRequests() {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Results");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("leaveRequests");
         ref.orderByChild("status").equalTo("Approved").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -55,4 +57,19 @@ public class RetrieveApprovedRequests extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onApproveClicked(int position) {
+        ApprovedModel approvedModel = approvedList.get(position);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("leaveRequests").child(approvedModel.getFacname());
+        ref.child("status").setValue("Hr Approve");
+    }
+
+    @Override
+    public void onDeclineClicked(int position) {
+        ApprovedModel approvedModel = approvedList.get(position);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("leaveRequests").child(approvedModel.getFacname());
+        ref.child("status").setValue("Hr Decline");
+    }
 }
+

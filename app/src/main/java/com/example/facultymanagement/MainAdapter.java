@@ -43,7 +43,9 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MainModel, MainAdapter.
         holder.startDate.setText(model.getStartdate());
         holder.endDate.setText(model.getEnddate());
         holder.status.setText(model.getStatus());
-
+        holder.subjectClassHour.setText(model.getSubjectclasshour());
+        holder.submissionDate.setText(model.getSubmissiondate());
+        holder.substitutionStaff.setText(model.getSubstitutionstaff());
         holder.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,7 +126,7 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MainModel, MainAdapter.
 
     static class myViewHolder extends RecyclerView.ViewHolder {
         ImageView img;
-        TextView name, type, reason, startDate, endDate, status;
+        TextView name, type, reason, startDate, endDate, status, subjectClassHour, submissionDate, substitutionStaff;
         Button btnEdit;
 
         public myViewHolder(@NonNull View itemView) {
@@ -136,7 +138,11 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MainModel, MainAdapter.
             startDate = itemView.findViewById(R.id.startDate);
             endDate = itemView.findViewById(R.id.endDate);
             status = itemView.findViewById(R.id.status);
+            subjectClassHour = itemView.findViewById(R.id.subjectclasshour);
+            submissionDate = itemView.findViewById(R.id.submissiondate);
+            substitutionStaff = itemView.findViewById(R.id.substitutionstaff);
             btnEdit = itemView.findViewById(R.id.btnEdit);
         }
     }
+
 }

@@ -153,19 +153,20 @@
                 android:textSize="20sp"/>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
                 android:id="@+id/Substitutionstaff"
-                android:hint=""
+                android:layout_width="match_parent"
+                android:hint="Enter Substitution Staff"
                 android:textColorHint="@color/black"
                 style="@style/Animation.Design.BottomSheetDialog"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/substitutionStaffEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:inputType="text"/>
-
+                    android:inputType="text"
+                    android:hint="Enter Substitution Staff"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -177,19 +178,20 @@
                 android:textSize="20sp"/>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
                 android:id="@+id/subclasshour"
-                android:hint=""
+                android:layout_width="match_parent"
+                android:hint="Enter Subject and Class Hour"
                 android:textColorHint="@color/black"
                 style="@style/Animation.Design.BottomSheetDialog"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/subjectClassHourEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:inputType="text"/>
-
+                    android:inputType="text"
+                    android:hint="Enter Subject and Class Hour"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
