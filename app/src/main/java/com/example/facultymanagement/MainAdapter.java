@@ -108,7 +108,6 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MainModel, MainAdapter.
             }
         }
     }
-
     private void createNewResultNode(String requestId, String requestedUserUid, String newStatus) {
         DatabaseReference resultsRef = FirebaseDatabase.getInstance().getReference().child("Results").child(requestId);
         resultsRef.child("requestId").setValue(requestId);

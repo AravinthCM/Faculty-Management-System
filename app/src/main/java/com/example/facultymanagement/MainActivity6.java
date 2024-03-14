@@ -17,7 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity6 extends AppCompatActivity {
 
-    private TextView profileName, profileEmail, profileUid, cas, earn, medic, vel, onduty, specialonduty;
+    private TextView profileName, profileEmail, profileUid, cas, earn, medic, vel,Permission, onduty, specialonduty;
     private FirebaseAuth mAuth;
     private Query mQuery;
 
@@ -33,6 +33,7 @@ public class MainActivity6 extends AppCompatActivity {
         earn = findViewById(R.id.earn);
         medic = findViewById(R.id.medic);
         vel = findViewById(R.id.vel);
+        Permission = findViewById(R.id.Permission);
         onduty = findViewById(R.id.onduty);
         specialonduty = findViewById(R.id.specialonduty);
 
@@ -53,6 +54,7 @@ public class MainActivity6 extends AppCompatActivity {
                         String earnedLeave = userSnapshot.child("EARNED LEAVE").getValue(String.class);
                         String medicalLeave = userSnapshot.child("MEDICAL LEAVE").getValue(String.class);
                         String velLeave = userSnapshot.child("VEL").getValue(String.class);
+                       // String perm = userSnapshot.child("PERMISSION").getValue(String.class);
                         Long onDuty = userSnapshot.child("ON DUTY").getValue(Long.class);
                         String specialOnDuty = userSnapshot.child("SPECIAL ON DUTY").getValue(String.class);
 
@@ -63,7 +65,8 @@ public class MainActivity6 extends AppCompatActivity {
                         earn.setText(earnedLeave);
                         medic.setText(medicalLeave);
                         vel.setText(velLeave);
-                        onduty.setText(String.valueOf(onDuty)); // Convert Long to String
+                       // Permission.setText(perm);
+                        onduty.setText(String.valueOf(onDuty));
                         specialonduty.setText(specialOnDuty);
                     }
                 } else {

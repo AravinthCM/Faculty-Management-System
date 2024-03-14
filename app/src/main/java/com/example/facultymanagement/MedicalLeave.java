@@ -24,73 +24,77 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class MedicalLeave extends AppCompatActivity {
 
-    private String userUid;
-    private String selectedStartDate;
-    private TextInputLayout FacName, LeaveReason, StartDate, EndDate;
+    private TextInputLayout FacName, LeaveReason, StartDate, EndDate, SubstitutionStaff, SubjectClassHour;
     private FirebaseDatabase database;
+    private String selectedStartDate;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.medical_leave);
 
-        database = FirebaseDatabase.getInstance();
+        // Initialize views
         FacName = findViewById(R.id.fullname);
         LeaveReason = findViewById(R.id.phone);
         StartDate = findViewById(R.id.start);
         EndDate = findViewById(R.id.end);
+        SubstitutionStaff = findViewById(R.id.Substitutionstaff);
+        SubjectClassHour = findViewById(R.id.subclasshour);
 
-        FirebaseAuth mAuth3 = FirebaseAuth.getInstance();
-        FirebaseUser currentUser3 = mAuth3.getCurrentUser();
+        // Initialize Firebase
+        database = FirebaseDatabase.getInstance();
 
-        if (currentUser3 != null) {
-            String userEmail = currentUser3.getEmail();
-            DatabaseReference usersRef = database.getReference("users");
+        // Fetch current user
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-            Query query = usersRef.orderByChild("Email").equalTo(userEmail);
-            query.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()) {
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            String facultyName = snapshot.child("Professor Name").getValue(String.class);
-                            FacName.getEditText().setText(facultyName);
-                        }
-                    } else {
-                        Toast.makeText(MedicalLeave.this, "User not found in the database", Toast.LENGTH_SHORT).show();
-                    }
-                }
+        if (currentUser != null) {
+            // Fetch user details
+            fetchUserDetails(currentUser);
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Toast.makeText(MedicalLeave.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
+            // Set onClickListeners
+            setOnClickListeners();
         } else {
             Toast.makeText(MedicalLeave.this, "User not logged in", Toast.LENGTH_SHORT).show();
         }
+    }
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+    private void fetchUserDetails(FirebaseUser currentUser) {
+        String userEmail = currentUser.getEmail();
+        DatabaseReference usersRef = database.getReference("users");
 
-        if (currentUser != null) {
-            userUid = currentUser.getUid();
-
-            Button submitRequestButton = findViewById(R.id.reqsub);
-            submitRequestButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    leaveRequest();
+        Query query = usersRef.orderByChild("Email").equalTo(userEmail);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        String facultyName = snapshot.child("Professor Name").getValue(String.class);
+                        FacName.getEditText().setText(facultyName);
+                    }
+                } else {
+                    Toast.makeText(MedicalLeave.this, "User not found in the database", Toast.LENGTH_SHORT).show();
                 }
-            });
-        }
+            }
 
-        database = FirebaseDatabase.getInstance();
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(MedicalLeave.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void setOnClickListeners() {
+        // Set onClickListeners for date pickers
         ImageView btnStartDate = findViewById(R.id.btnStartDate);
         ImageView btnEndDate = findViewById(R.id.btnEndDate);
 
@@ -100,7 +104,6 @@ public class MedicalLeave extends AppCompatActivity {
                 showDatePickerDialog((TextInputEditText) StartDate.getEditText());
             }
         });
-
         btnEndDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,7 +111,17 @@ public class MedicalLeave extends AppCompatActivity {
             }
         });
 
+
+        // Set onClickListener for submit button
+        Button submitRequestButton = findViewById(R.id.reqsub);
+        submitRequestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                leaveRequest();
+            }
+        });
     }
+
     private void showDatePickerDialog(final TextInputEditText dateEditText) {
         Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
@@ -148,20 +161,23 @@ public class MedicalLeave extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    public void leaveRequest() {
+    private void leaveRequest() {
         String name = FacName.getEditText().getText().toString();
         String reason = LeaveReason.getEditText().getText().toString();
         String dateStart = StartDate.getEditText().getText().toString();
         String dateEnd = EndDate.getEditText().getText().toString();
+        String substitutionStaff = SubstitutionStaff.getEditText().getText().toString();
+        String subjectClassHour = SubjectClassHour.getEditText().getText().toString();
         String leaveType = "Medical Leave";
 
-        if (!validateFacultyName() || !validateLeaveReason() || !validateStart() || !validateEnd()) {
+        if (!validateFacultyName() || !validateLeaveReason() || !validateStart() || !validateEnd() || !validateSubstitutionStaff() || !validateSubjectClassHour()) {
             return;
         } else {
-            FirebaseAuth mAuth = FirebaseAuth.getInstance();
-            FirebaseUser currentUser = mAuth.getCurrentUser();
+            String submissionDate = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());
 
+            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
             if (currentUser != null) {
+                String userUid = currentUser.getUid();
                 String userEmail = currentUser.getEmail();
                 DatabaseReference usersRef = database.getReference("users");
 
@@ -174,35 +190,49 @@ public class MedicalLeave extends AppCompatActivity {
                                 String userUid = snapshot.getKey();
 
                                 // Calculate number of leave days
-                                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                                try {
-                                    long diff = dateFormat.parse(dateEnd).getTime() - dateFormat.parse(dateStart).getTime();
-                                    long leaveDays = diff / (24 * 60 * 60 * 1000) + 1; // Adding 1 to include both start and end dates
+                                long leaveDays = calculateLeaveDays(dateStart, dateEnd);
 
-                                    // Update MEDICAL LEAVE key in the database
-                                    DatabaseReference userRef = snapshot.getRef();
-                                    long currentMedicalLeave = snapshot.child("MEDICAL LEAVE").getValue(Long.class);
-                                    userRef.child("MEDICAL LEAVE").setValue(currentMedicalLeave - leaveDays);
+                                // Fetch current leave balance
+                                DatabaseReference casualLeaveRef = database.getReference("users").child(userUid).child("MEDICAL LEAVE");
+                                casualLeaveRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        if (dataSnapshot.exists()) {
+                                            String leaveBalanceString = dataSnapshot.getValue(String.class);
+                                            if (leaveBalanceString != null) {
+                                                long currentLeaveBalance = Long.parseLong(leaveBalanceString);
+                                                long updatedLeaveBalance = currentLeaveBalance - leaveDays;
+                                                if (updatedLeaveBalance < 0) {
+                                                    Toast.makeText(MedicalLeave.this, "Insufficient leave balance", Toast.LENGTH_SHORT).show();
+                                                    return;
+                                                }
 
-                                    // Submit leave request
-                                    DatabaseReference leaveReqReferenceAll = database.getReference("leaveRequests");
-                                    String leaveReqIdAll = leaveReqReferenceAll.push().getKey();
-                                    LeaveRequestForm helpAll = new LeaveRequestForm(name, leaveType, reason, dateStart, dateEnd, "pending", userUid);
-                                    leaveReqReferenceAll.child(leaveReqIdAll).setValue(helpAll);
+                                                // Update leave balance
+                                                casualLeaveRef.setValue(String.valueOf(updatedLeaveBalance));
 
-                                    DatabaseReference leaveReqReferenceUser = database.getReference("users").child(userUid).child("requests");
-                                    String leaveReqIdUser = leaveReqReferenceUser.push().getKey();
-                                    LeaveRequestForm helpUser = new LeaveRequestForm(name, leaveType, reason, dateStart, dateEnd, "pending", userUid);
-                                    leaveReqReferenceUser.child(leaveReqIdUser).setValue(helpUser);
+                                                // Proceed to submit leave request
+                                                DatabaseReference leaveReqReferenceAll = database.getReference("leaveRequests");
+                                                String leaveReqIdAll = leaveReqReferenceAll.push().getKey();
+                                                CasualLeaveFormModel helpAll = new CasualLeaveFormModel(name, leaveType, reason, dateStart, dateEnd, substitutionStaff, subjectClassHour, "Pending", submissionDate, userUid);
+                                                leaveReqReferenceAll.child(leaveReqIdAll).setValue(helpAll);
 
-                                    Toast.makeText(MedicalLeave.this, "Leave Form successfully Submitted", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(MedicalLeave.this, MainActivity5.class);
-                                    startActivity(intent);
-                                    return;
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                    Toast.makeText(MedicalLeave.this, "Error occurred while processing leave days", Toast.LENGTH_SHORT).show();
-                                }
+                                                DatabaseReference leaveReqReferenceUser = database.getReference("users").child(userUid).child("requests");
+                                                String leaveReqIdUser = leaveReqReferenceUser.push().getKey();
+                                                CasualLeaveFormModel helpUser = new CasualLeaveFormModel(name, leaveType, reason, dateStart, dateEnd, substitutionStaff, subjectClassHour, "Pending", submissionDate, userUid);
+                                                leaveReqReferenceUser.child(leaveReqIdUser).setValue(helpUser);
+
+                                                Toast.makeText(MedicalLeave.this, "Leave Form successfully Submitted", Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(MedicalLeave.this, MainActivity5.class);
+                                                startActivity(intent);
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                                        Toast.makeText(MedicalLeave.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             }
                         } else {
                             Toast.makeText(MedicalLeave.this, "User not found in the database", Toast.LENGTH_SHORT).show();
@@ -217,6 +247,49 @@ public class MedicalLeave extends AppCompatActivity {
             } else {
                 Toast.makeText(MedicalLeave.this, "User not logged in", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    private long calculateLeaveDays(String startDate, String endDate) {
+        // Parse start and end dates
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        Date dateStart, dateEnd;
+        try {
+            dateStart = sdf.parse(startDate);
+            dateEnd = sdf.parse(endDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0;
+        }
+
+        // Calculate number of days between start and end dates
+        long diff = dateEnd.getTime() - dateStart.getTime();
+        return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) + 1; // Adding 1 to include the end date
+    }
+
+
+    private boolean validateSubstitutionStaff() {
+        String val = SubstitutionStaff.getEditText().getText().toString();
+
+        if (val.isEmpty()) {
+            SubstitutionStaff.setError("Substitution Staff cannot be empty");
+            return false;
+        } else {
+            SubstitutionStaff.setError(null);
+            return true;
+        }
+    }
+
+    // Method to validate Subject and Class Hour field
+    private boolean validateSubjectClassHour() {
+        String val = SubjectClassHour.getEditText().getText().toString();
+
+        if (val.isEmpty()) {
+            SubjectClassHour.setError("Subject and Class Hour cannot be empty");
+            return false;
+        } else {
+            SubjectClassHour.setError(null);
+            return true;
         }
     }
 
@@ -273,3 +346,4 @@ public class MedicalLeave extends AppCompatActivity {
         }
     }
 }
+
