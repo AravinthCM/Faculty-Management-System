@@ -1,30 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:padding="20dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/txtRequestId"
         android:layout_width="wrap_content"
+        android:textColor="@color/bblack"
         android:layout_height="wrap_content"
         android:textAppearance="?android:textAppearanceMedium"/>
 
     <TextView
         android:id="@+id/txtRequestedFacultyName"
         android:layout_width="wrap_content"
+        android:textColor="@color/bblack"
         android:layout_height="wrap_content"
         android:textAppearance="?android:textAppearanceMedium"/>
 
     <TextView
         android:id="@+id/txtLeaveType"
         android:layout_width="wrap_content"
+        android:textColor="@color/bblack"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:textAppearanceMedium"/>
+
+    <TextView
+        android:id="@+id/txtLeaveReason"
+        android:layout_width="wrap_content"
+        android:textColor="@color/bblack"
         android:layout_height="wrap_content"
         android:textAppearance="?android:textAppearanceMedium"/>
 
     <TextView
         android:id="@+id/txtStartDate"
+        android:textColor="@color/bblack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:textAppearanceMedium"/>
@@ -32,6 +45,7 @@
     <TextView
         android:id="@+id/txtEndDate"
         android:layout_width="wrap_content"
+        android:textColor="@color/bblack"
         android:layout_height="wrap_content"
         android:textAppearance="?android:textAppearanceMedium"/>
 
@@ -39,17 +53,29 @@
         android:id="@+id/txtTimestamp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/bblack"
         android:textAppearance="?android:textAppearanceMedium"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
     <Button
+        android:layout_marginStart="50dp"
         android:id="@+id/btnApprove"
         android:layout_width="wrap_content"
+        android:textColor="@color/bblack"
         android:layout_height="wrap_content"
         android:text="Approve"/>
 
     <Button
+        android:layout_marginStart="10dp"
         android:id="@+id/btnDecline"
+        android:textColor="@color/bblack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Decline"/>
+
+    </LinearLayout>
 </LinearLayout>

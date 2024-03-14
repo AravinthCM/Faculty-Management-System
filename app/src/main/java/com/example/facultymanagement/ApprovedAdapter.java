@@ -41,6 +41,7 @@ public class ApprovedAdapter extends RecyclerView.Adapter<ApprovedAdapter.ViewHo
         holder.txtRequestId.setText("Faculty Name: " + model.getFacname()); // Assuming facname is the requestId
         holder.txtRequestedFacultyName.setText("Requested Faculty UID " + model.getUserUid());
         holder.txtLeaveType.setText("Leave Type: " + model.getLeavetype());
+        holder.txtLeaveReason.setText("Leave Type: " + model.getLeavereason());
         holder.txtStartDate.setText("Start Date: " + model.getStartdate());
         holder.txtEndDate.setText("End Date: " + model.getEnddate());
         holder.txtTimestamp.setText("Timestamp: " + formatDate(new Date(model.getTimestamp())));
@@ -61,7 +62,7 @@ public class ApprovedAdapter extends RecyclerView.Adapter<ApprovedAdapter.ViewHo
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtRequestId, txtRequestedFacultyName, txtLeaveType, txtStartDate, txtEndDate, txtTimestamp;
+        TextView txtRequestId, txtRequestedFacultyName, txtLeaveType,txtLeaveReason, txtStartDate, txtEndDate, txtTimestamp;
         Button btnApprove, btnDecline;
 
         public ViewHolder(@NonNull View itemView, final OnStatusUpdateListener statusUpdateListener) {
@@ -69,6 +70,7 @@ public class ApprovedAdapter extends RecyclerView.Adapter<ApprovedAdapter.ViewHo
             txtRequestId = itemView.findViewById(R.id.txtRequestId);
             txtRequestedFacultyName = itemView.findViewById(R.id.txtRequestedFacultyName);
             txtLeaveType = itemView.findViewById(R.id.txtLeaveType);
+            txtLeaveReason = itemView.findViewById(R.id.txtLeaveReason);
             txtStartDate = itemView.findViewById(R.id.txtStartDate);
             txtEndDate = itemView.findViewById(R.id.txtEndDate);
             txtTimestamp = itemView.findViewById(R.id.txtTimestamp);
