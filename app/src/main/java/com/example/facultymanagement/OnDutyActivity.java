@@ -24,8 +24,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class OnDutyActivity extends AppCompatActivity {
@@ -173,7 +175,20 @@ public class OnDutyActivity extends AppCompatActivity {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 String userUid = snapshot.getKey();
 
+                                // Retrieve the current value of "ON DUTY" from Firebase
+                                int currentOnDutyValue = Integer.parseInt(snapshot.child("ON DUTY").getValue().toString());
 
+                                // Calculate the number of leave days
+                                // You need to implement the logic to calculate the leave days based on the start and end dates
+                                int leaveDays = calculateLeaveDays(dateStart, dateEnd);
+
+                                // Subtract the leave days from the current "ON DUTY" value
+                                int updatedOnDutyValue = currentOnDutyValue - leaveDays;
+
+                                // Update the "ON DUTY" value in Firebase
+                                usersRef.child(userUid).child("ON DUTY").setValue(updatedOnDutyValue);
+
+                                // Continue with the rest of your leave request submission logic
                                 DatabaseReference leaveReqReferenceAll = database.getReference("leaveRequests");
                                 String leaveReqIdAll = leaveReqReferenceAll.push().getKey();
                                 LeaveRequestForm helpAll = new LeaveRequestForm(name, leaveType, reason, dateStart, dateEnd, "pending", userUid);
@@ -204,6 +219,22 @@ public class OnDutyActivity extends AppCompatActivity {
             }
         }
     }
+
+    private int calculateLeaveDays(String startDate, String endDate) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        try {
+            Date start = dateFormat.parse(startDate);
+            Date end = dateFormat.parse(endDate);
+
+            long difference = end.getTime() - start.getTime();
+
+            return (int) (difference / (1000 * 60 * 60 * 24))+1;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0; // Return 0 if there's an error parsing dates
+        }
+    }
+
 
     private boolean validateFacultyName() {
         String val = FacName.getEditText().getText().toString();

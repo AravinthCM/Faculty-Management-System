@@ -173,21 +173,36 @@ public class MedicalLeave extends AppCompatActivity {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 String userUid = snapshot.getKey();
 
+                                // Calculate number of leave days
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                                try {
+                                    long diff = dateFormat.parse(dateEnd).getTime() - dateFormat.parse(dateStart).getTime();
+                                    long leaveDays = diff / (24 * 60 * 60 * 1000) + 1; // Adding 1 to include both start and end dates
 
-                                DatabaseReference leaveReqReferenceAll = database.getReference("leaveRequests");
-                                String leaveReqIdAll = leaveReqReferenceAll.push().getKey();
-                                LeaveRequestForm helpAll = new LeaveRequestForm(name, leaveType, reason, dateStart, dateEnd, "pending", userUid);
-                                leaveReqReferenceAll.child(leaveReqIdAll).setValue(helpAll);
+                                    // Update MEDICAL LEAVE key in the database
+                                    DatabaseReference userRef = snapshot.getRef();
+                                    long currentMedicalLeave = snapshot.child("MEDICAL LEAVE").getValue(Long.class);
+                                    userRef.child("MEDICAL LEAVE").setValue(currentMedicalLeave - leaveDays);
 
-                                DatabaseReference leaveReqReferenceUser = database.getReference("users").child(userUid).child("requests");
-                                String leaveReqIdUser = leaveReqReferenceUser.push().getKey();
-                                LeaveRequestForm helpUser = new LeaveRequestForm(name, leaveType, reason, dateStart, dateEnd, "pending", userUid);
-                                leaveReqReferenceUser.child(leaveReqIdUser).setValue(helpUser);
+                                    // Submit leave request
+                                    DatabaseReference leaveReqReferenceAll = database.getReference("leaveRequests");
+                                    String leaveReqIdAll = leaveReqReferenceAll.push().getKey();
+                                    LeaveRequestForm helpAll = new LeaveRequestForm(name, leaveType, reason, dateStart, dateEnd, "pending", userUid);
+                                    leaveReqReferenceAll.child(leaveReqIdAll).setValue(helpAll);
 
-                                Toast.makeText(MedicalLeave.this, "Leave Form successfully Submitted", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(MedicalLeave.this, MainActivity5.class);
-                                startActivity(intent);
-                                return;
+                                    DatabaseReference leaveReqReferenceUser = database.getReference("users").child(userUid).child("requests");
+                                    String leaveReqIdUser = leaveReqReferenceUser.push().getKey();
+                                    LeaveRequestForm helpUser = new LeaveRequestForm(name, leaveType, reason, dateStart, dateEnd, "pending", userUid);
+                                    leaveReqReferenceUser.child(leaveReqIdUser).setValue(helpUser);
+
+                                    Toast.makeText(MedicalLeave.this, "Leave Form successfully Submitted", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(MedicalLeave.this, MainActivity5.class);
+                                    startActivity(intent);
+                                    return;
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    Toast.makeText(MedicalLeave.this, "Error occurred while processing leave days", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         } else {
                             Toast.makeText(MedicalLeave.this, "User not found in the database", Toast.LENGTH_SHORT).show();
@@ -204,6 +219,7 @@ public class MedicalLeave extends AppCompatActivity {
             }
         }
     }
+
 
     private boolean validateFacultyName() {
         String val = FacName.getEditText().getText().toString();

@@ -25,6 +25,7 @@ public class MainActivity6 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
+
         profileName = findViewById(R.id.profileName);
         profileEmail = findViewById(R.id.profileEmail);
         profileUid = findViewById(R.id.profileUid);
@@ -52,7 +53,7 @@ public class MainActivity6 extends AppCompatActivity {
                         String earnedLeave = userSnapshot.child("EARNED LEAVE").getValue(String.class);
                         String medicalLeave = userSnapshot.child("MEDICAL LEAVE").getValue(String.class);
                         String velLeave = userSnapshot.child("VEL").getValue(String.class);
-                        String onDuty = userSnapshot.child("ON DUTY").getValue(String.class);
+                        Long onDuty = userSnapshot.child("ON DUTY").getValue(Long.class);
                         String specialOnDuty = userSnapshot.child("SPECIAL ON DUTY").getValue(String.class);
 
                         profileName.setText(name);
@@ -62,7 +63,7 @@ public class MainActivity6 extends AppCompatActivity {
                         earn.setText(earnedLeave);
                         medic.setText(medicalLeave);
                         vel.setText(velLeave);
-                        onduty.setText(onDuty);
+                        onduty.setText(String.valueOf(onDuty)); // Convert Long to String
                         specialonduty.setText(specialOnDuty);
                     }
                 } else {

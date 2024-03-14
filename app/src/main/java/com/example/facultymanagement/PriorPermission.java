@@ -186,7 +186,7 @@ public class PriorPermission extends AppCompatActivity {
         String reason = LeaveReason.getEditText().getText().toString();
         String dateStart = StartDate.getEditText().getText().toString();
         String dateEnd = EndDate.getEditText().getText().toString();
-        String leaveType = "Casual Leave";
+        String leaveType = "Prior Permission";
 
         if (!validateFacultyName() || !validateLeaveReason() || !validateStart() || !validateEnd()) {
             return;
@@ -206,20 +206,40 @@ public class PriorPermission extends AppCompatActivity {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 String userUid = snapshot.getKey();
 
+                                // Update permission count
+                                int currentPermissionCount = snapshot.child("PERMISSION").getValue(Integer.class);
+                                if (currentPermissionCount > 0) {
+                                    // Decrease permission count by 1
+                                    int newPermissionCount = currentPermissionCount - 1;
+                                    snapshot.getRef().child("PERMISSION").setValue(newPermissionCount);
 
-                                DatabaseReference leaveReqReferenceAll = database.getReference("leaveRequests");
-                                String leaveReqIdAll = leaveReqReferenceAll.push().getKey();
-                                LeaveRequestForm helpAll = new LeaveRequestForm(name, leaveType, reason, dateStart, dateEnd, "pending", userUid);
-                                leaveReqReferenceAll.child(leaveReqIdAll).setValue(helpAll);
+                                    // If permission count goes below 3, decrease casual leave count by 1
+                                    if (newPermissionCount < 3) {
+                                        int currentCasualLeaveCount = snapshot.child("CASUAL LEAVE").getValue(Integer.class);
+                                        if (currentCasualLeaveCount > 0) {
+                                            // Decrease casual leave count by 1
+                                            int newCasualLeaveCount = currentCasualLeaveCount - 1;
+                                            snapshot.getRef().child("CASUAL LEAVE").setValue(newCasualLeaveCount);
+                                        }
+                                    }
 
-                                DatabaseReference leaveReqReferenceUser = database.getReference("users").child(userUid).child("requests");
-                                String leaveReqIdUser = leaveReqReferenceUser.push().getKey();
-                                LeaveRequestForm helpUser = new LeaveRequestForm(name, leaveType, reason, dateStart, dateEnd, "pending", userUid);
-                                leaveReqReferenceUser.child(leaveReqIdUser).setValue(helpUser);
+                                    // Save leave request
+                                    DatabaseReference leaveReqReferenceAll = database.getReference("leaveRequests");
+                                    String leaveReqIdAll = leaveReqReferenceAll.push().getKey();
+                                    LeaveRequestForm helpAll = new LeaveRequestForm(name, leaveType, reason, dateStart, dateEnd, "pending", userUid);
+                                    leaveReqReferenceAll.child(leaveReqIdAll).setValue(helpAll);
 
-                                Toast.makeText(PriorPermission.this, "Leave Form successfully Submitted", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(PriorPermission.this, MainActivity5.class);
-                                startActivity(intent);
+                                    DatabaseReference leaveReqReferenceUser = database.getReference("users").child(userUid).child("requests");
+                                    String leaveReqIdUser = leaveReqReferenceUser.push().getKey();
+                                    LeaveRequestForm helpUser = new LeaveRequestForm(name, leaveType, reason, dateStart, dateEnd, "pending", userUid);
+                                    leaveReqReferenceUser.child(leaveReqIdUser).setValue(helpUser);
+
+                                    Toast.makeText(PriorPermission.this, "Leave Form successfully Submitted", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(PriorPermission.this, MainActivity5.class);
+                                    startActivity(intent);
+                                } else {
+                                    Toast.makeText(PriorPermission.this, "You have exhausted your permission days", Toast.LENGTH_SHORT).show();
+                                }
                                 return;
                             }
                         } else {

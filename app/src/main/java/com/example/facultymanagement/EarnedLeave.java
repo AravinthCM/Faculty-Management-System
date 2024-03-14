@@ -34,6 +34,8 @@ public class EarnedLeave extends AppCompatActivity {
     private String selectedStartDate;
     private TextInputLayout FacName, LeaveReason, StartDate, EndDate;
     private FirebaseDatabase database;
+    private int leaveDays; // Variable to store the number of leave days
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,6 +141,10 @@ public class EarnedLeave extends AppCompatActivity {
                             if (dateEditText == StartDate.getEditText()) {
                                 selectedStartDate = selectedCalendar.getTime().toString();
                             }
+
+                            // Calculate leave days
+                            leaveDays = calculateLeaveDays(StartDate.getEditText().getText().toString(),
+                                    EndDate.getEditText().getText().toString());
                         }
                     }
                 },
@@ -146,6 +152,13 @@ public class EarnedLeave extends AppCompatActivity {
 
         datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
         datePickerDialog.show();
+    }
+
+    private int calculateLeaveDays(String startDate, String endDate) {
+        // Implement your logic to calculate leave days here
+        // This is just a placeholder
+        // You need to implement the actual logic based on your requirements
+        return 0;
     }
 
     public void leaveRequest() {
@@ -173,20 +186,27 @@ public class EarnedLeave extends AppCompatActivity {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 String userUid = snapshot.getKey();
 
+                                // Proceed only if leave days are calculated
+                                if (leaveDays > 0) {
+                                    // Update "EARNED LEAVE" value in Firebase
+                                    updateEarnedLeave(userUid, leaveDays);
 
-                                DatabaseReference leaveReqReferenceAll = database.getReference("leaveRequests");
-                                String leaveReqIdAll = leaveReqReferenceAll.push().getKey();
-                                LeaveRequestForm helpAll = new LeaveRequestForm(name, leaveType, reason, dateStart, dateEnd, "pending", userUid);
-                                leaveReqReferenceAll.child(leaveReqIdAll).setValue(helpAll);
+                                    DatabaseReference leaveReqReferenceAll = database.getReference("leaveRequests");
+                                    String leaveReqIdAll = leaveReqReferenceAll.push().getKey();
+                                    LeaveRequestForm helpAll = new LeaveRequestForm(name, leaveType, reason, dateStart, dateEnd, "pending", userUid);
+                                    leaveReqReferenceAll.child(leaveReqIdAll).setValue(helpAll);
 
-                                DatabaseReference leaveReqReferenceUser = database.getReference("users").child(userUid).child("requests");
-                                String leaveReqIdUser = leaveReqReferenceUser.push().getKey();
-                                LeaveRequestForm helpUser = new LeaveRequestForm(name, leaveType, reason, dateStart, dateEnd, "pending", userUid);
-                                leaveReqReferenceUser.child(leaveReqIdUser).setValue(helpUser);
+                                    DatabaseReference leaveReqReferenceUser = database.getReference("users").child(userUid).child("requests");
+                                    String leaveReqIdUser = leaveReqReferenceUser.push().getKey();
+                                    LeaveRequestForm helpUser = new LeaveRequestForm(name, leaveType, reason, dateStart, dateEnd, "pending", userUid);
+                                    leaveReqReferenceUser.child(leaveReqIdUser).setValue(helpUser);
 
-                                Toast.makeText(EarnedLeave.this, "Leave Form successfully Submitted", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(EarnedLeave.this, MainActivity5.class);
-                                startActivity(intent);
+                                    Toast.makeText(EarnedLeave.this, "Leave Form successfully Submitted", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(EarnedLeave.this, MainActivity5.class);
+                                    startActivity(intent);
+                                } else {
+                                    Toast.makeText(EarnedLeave.this, "Invalid leave days calculation", Toast.LENGTH_SHORT).show();
+                                }
                                 return;
                             }
                         } else {
@@ -204,6 +224,29 @@ public class EarnedLeave extends AppCompatActivity {
             }
         }
     }
+
+    private void updateEarnedLeave(String userUid, int leaveDays) {
+        DatabaseReference userRef = database.getReference("users").child(userUid);
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    int currentEarnedLeave = Integer.parseInt(dataSnapshot.child("EARNED LEAVE").getValue(String.class));
+                    int updatedEarnedLeave = currentEarnedLeave - leaveDays;
+
+                    // Update the "EARNED LEAVE" value in the database
+                    userRef.child("EARNED LEAVE").setValue(String.valueOf(updatedEarnedLeave));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(EarnedLeave.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
 
     private boolean validateFacultyName() {
         String val = FacName.getEditText().getText().toString();

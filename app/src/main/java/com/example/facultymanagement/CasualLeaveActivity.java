@@ -176,7 +176,24 @@ public class CasualLeaveActivity extends AppCompatActivity {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 String userUid = snapshot.getKey();
 
+                                // Retrieve current Casual Leave balance from Firebase
+                                int currentCasualLeaveBalance = Integer.parseInt(snapshot.child("CASUAL LEAVE").getValue(String.class));
 
+                                // Calculate the number of days between start date and end date
+                                long numberOfDays = calculateNumberOfDays(dateStart, dateEnd);
+
+                                // Deduct the number of days from the current balance
+                                int updatedCasualLeaveBalance = currentCasualLeaveBalance - (int) numberOfDays;
+
+                                if (updatedCasualLeaveBalance < 0) {
+                                    Toast.makeText(CasualLeaveActivity.this, "Insufficient Casual Leave balance", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+
+                                // Update Casual Leave balance in Firebase
+                                usersRef.child(userUid).child("CASUAL LEAVE").setValue(String.valueOf(updatedCasualLeaveBalance));
+
+                                // Proceed with submitting the leave request
                                 DatabaseReference leaveReqReferenceAll = database.getReference("leaveRequests");
                                 String leaveReqIdAll = leaveReqReferenceAll.push().getKey();
                                 LeaveRequestForm helpAll = new LeaveRequestForm(name, leaveType, reason, dateStart, dateEnd, "pending", userUid);
@@ -207,6 +224,25 @@ public class CasualLeaveActivity extends AppCompatActivity {
             }
         }
     }
+
+    // Calculate the number of days between start date and end date
+    // Calculate the number of days between start date and end date (inclusive)
+    private long calculateNumberOfDays(String startDate, String endDate) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            Calendar startCalendar = Calendar.getInstance();
+            Calendar endCalendar = Calendar.getInstance();
+            startCalendar.setTime(sdf.parse(startDate));
+            endCalendar.setTime(sdf.parse(endDate));
+            long diffMillis = endCalendar.getTimeInMillis() - startCalendar.getTimeInMillis();
+            return (diffMillis / (24 * 60 * 60 * 1000)) + 1; // Add 1 to include both start and end dates
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+
 
     private boolean validateFacultyName() {
         String val = FacName.getEditText().getText().toString();
